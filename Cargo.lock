@@ -1706,6 +1706,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "fp-consensus"
+version = "0.1.0"
+dependencies = [
+ "parity-scale-codec",
+ "sp-core 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
+ "sp-runtime 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
+ "sp-std 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
+]
+
+[[package]]
 name = "fp-evm"
 version = "0.8.0"
 dependencies = [
@@ -1713,6 +1723,20 @@ dependencies = [
  "parity-scale-codec",
  "serde",
  "sp-core 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
+ "sp-std 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
+]
+
+[[package]]
+name = "fp-rpc"
+version = "0.1.0"
+dependencies = [
+ "ethereum",
+ "ethereum-types",
+ "fp-evm",
+ "parity-scale-codec",
+ "sp-api 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
+ "sp-core 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
+ "sp-runtime 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
  "sp-std 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
 ]
 
@@ -4343,6 +4367,7 @@ dependencies = [
 name = "node-template-runtime"
 version = "2.0.0"
 dependencies = [
+ "fp-rpc",
  "frame-benchmarking 2.0.0",
  "frame-executive",
  "frame-support 2.0.0",
@@ -4352,6 +4377,7 @@ dependencies = [
  "hex-literal",
  "pallet-aura",
  "pallet-balances 2.0.0",
+ "pallet-ethereum",
  "pallet-evm",
  "pallet-grandpa",
  "pallet-randomness-collective-flip",
@@ -4870,6 +4896,32 @@ dependencies = [
  "sp-runtime 2.0.0",
  "sp-std 2.0.0",
  "substrate-test-utils",
+]
+
+[[package]]
+name = "pallet-ethereum"
+version = "0.1.0"
+dependencies = [
+ "ethereum",
+ "ethereum-types",
+ "evm",
+ "fp-consensus",
+ "fp-evm",
+ "fp-rpc",
+ "frame-support 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
+ "frame-system 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
+ "libsecp256k1",
+ "pallet-balances 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
+ "pallet-evm",
+ "pallet-timestamp 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
+ "parity-scale-codec",
+ "rlp",
+ "rustc-hex",
+ "serde",
+ "sha3 0.8.2",
+ "sp-io 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
+ "sp-runtime 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
+ "sp-std 2.0.0 (git+https://github.com/paritytech/substrate.git?branch=frontier)",
 ]
 
 [[package]]

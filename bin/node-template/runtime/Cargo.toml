@@ -43,6 +43,8 @@ frame-system-benchmarking = { version = "2.0.0", default-features = false, path 
 
 # Frontier Dependencies
 pallet-evm = { version = "2.0.0", default-features = false, path = "../../../vendor/frontier/frame/evm" }
+pallet-ethereum = { version = "0.1.0", path = "../../../vendor/frontier/frame/ethereum", default-features = false }
+fp-rpc = { version = "0.1.0", path = "../../../vendor/frontier/primitives/rpc", default-features = false }
 
 # Other Dependencies
 codec = { package = "parity-scale-codec", version = "1.3.4", default-features = false, features = ["derive"] }
@@ -59,6 +61,7 @@ std = [
 	"codec/std",
 	"frame-executive/std",
 	"frame-support/std",
+	"fp-rpc/std",
 	"pallet-aura/std",
 	"pallet-balances/std",
 	"pallet-grandpa/std",
@@ -68,6 +71,7 @@ std = [
 	"pallet-transaction-payment/std",
 	"pallet-transaction-payment-rpc-runtime-api/std",
 	"pallet-evm/std",
+	"pallet-ethereum/std",
 	"serde",
 	"sp-api/std",
 	"sp-block-builder/std",
