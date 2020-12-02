@@ -172,7 +172,7 @@ impl Clone for BenchDb {
 			.map(|f_result|
 				f_result.expect("failed to read file in seed db")
 					.path()
-			).collect();
+			).collect::<Vec<_>>();
 		fs_extra::copy_items(
 			&seed_db_files,
 			dir.path(),

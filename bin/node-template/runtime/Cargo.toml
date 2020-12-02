@@ -41,6 +41,9 @@ pallet-transaction-payment-rpc-runtime-api = { version = "2.0.0", default-featur
 frame-benchmarking = { version = "2.0.0", default-features = false, path = "../../../frame/benchmarking", optional = true }
 frame-system-benchmarking = { version = "2.0.0", default-features = false, path = "../../../frame/system/benchmarking", optional = true }
 
+# Frontier Dependencies
+pallet-evm = { version = "2.0.0", default-features = false, path = "../../../vendor/frontier/frame/evm" }
+
 # Other Dependencies
 codec = { package = "parity-scale-codec", version = "1.3.4", default-features = false, features = ["derive"] }
 hex-literal = { version = "0.3.1", optional = true }
@@ -64,6 +67,7 @@ std = [
 	"pallet-timestamp/std",
 	"pallet-transaction-payment/std",
 	"pallet-transaction-payment-rpc-runtime-api/std",
+	"pallet-evm/std",
 	"serde",
 	"sp-api/std",
 	"sp-block-builder/std",

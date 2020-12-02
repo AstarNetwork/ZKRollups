@@ -124,7 +124,7 @@ impl Clone for TempDatabase {
 			.map(|f_result|
 				f_result.expect("failed to read file in seed db")
 					.path()
-			).collect();
+			).collect::<Vec<_>>();
 		fs_extra::copy_items(
 			&self_db_files,
 			new_dir.path(),
