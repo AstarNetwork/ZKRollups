@@ -1,25 +1,27 @@
 **/target/
+**/node_modules/
 **/*.rs.bk
 *.swp
 .wasm-binaries
+polkadot/runtime/wasm/target/
+core/executor/wasm/target/
+core/test-runtime/wasm/target/
 pwasm-alloc/target/
 pwasm-libc/target/
 pwasm-alloc/Cargo.lock
 pwasm-libc/Cargo.lock
-bin/node/runtime/wasm/target/
+node/runtime/wasm/target/
 **/._*
 **/.criterion/
 .vscode
 polkadot.*
 .DS_Store
 .idea/
-nohup.out
-rls*.log
-*.orig
-*.rej
-**/wip/*.stderr
-.local
-**/hfuzz_target/
-**/hfuzz_workspace/
-.cargo/
 .cargo-remote.toml
+
+# Added by cargo
+/target
+
+# NixOS development environment
+.envrc
+shell.nix
