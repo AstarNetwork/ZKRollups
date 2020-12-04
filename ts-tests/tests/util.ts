@@ -81,33 +81,9 @@ export async function startFrontierNode(specFilename: string, provider?: string)
 		process.exit(1);
 	});
 
-	const binaryLogs = [];
 	await new Promise((resolve) => {
-		const timer = setTimeout(() => {
-			console.error(`\x1b[31m Failed to start Frontier Template Node.\x1b[0m`);
-			console.error(`Command: ${cmd} ${args.join(" ")}`);
-			console.error(`Logs:`);
-			console.error(binaryLogs.map((chunk) => chunk.toString()).join("\n"));
-			process.exit(1);
-		}, SPAWNING_TIME - 2000);
-
 		const onData = async (chunk) => {
-			if (DISPLAY_LOG) {
-				console.log(chunk.toString());
-			}
-			binaryLogs.push(chunk);
 			if (chunk.toString().match(/Manual Seal Ready/)) {
-				if (!provider || provider == "http") {
-					// This is needed as the EVM runtime needs to warmup with a first call
-					await web3.eth.getChainId();
-				}
-
-				clearTimeout(timer);
-				if (!DISPLAY_LOG) {
-					binary.stderr.off("data", onData);
-					binary.stdout.off("data", onData);
-				}
-				// console.log(`\x1b[31m Starting RPC\x1b[0m`);
 				resolve();
 			}
 		};
@@ -115,7 +91,6 @@ export async function startFrontierNode(specFilename: string, provider?: string)
 		binary.stdout.on("data", onData);
 	});
 
-	console.log(provider)
 	if (provider == 'ws') {
 		web3 = new Web3(`ws://localhost:${WS_PORT}`);
 	}

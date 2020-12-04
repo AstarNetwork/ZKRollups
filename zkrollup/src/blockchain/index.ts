@@ -7,16 +7,13 @@ const describeWithSubstrate = (title: string, test: (web3: Web3) => void) => {
 	describe(title, () => {
 		let command: ChildProcess
 
-		beforeEach(async () => {
-			command = buildChain()
-			await web3.eth.getChainId()
-		})
+		beforeEach(async () => command = await buildChain())
 		afterAll(() => command.kill())
 		test(web3)
 	})
 }
 
-const buildChain = () => {
+const buildChain = async () => {
     const args = [
         `--chain=${specFile}`,
 		`--validator`,
@@ -30,10 +27,22 @@ const buildChain = () => {
 		`--rpc-port=${rpcPort}`,
 		`--ws-port=${wsPort}`,
 		`--tmp`,
-    ]
-    const command = spawn(target, args)
-    command.on("error", e => {throw e})
-    return command
+	]
+    return await initCommand(args)
+}
+
+const initCommand = async (args: string[]): Promise<ChildProcess> => {
+	const command = spawn(target, args)
+	command.on("error", e => {throw e})
+	await new Promise(resolve => {
+		const onData = async (chunk: any) => {
+			if (chunk.toString().match(/Manual Seal Ready/))
+				resolve(null)
+		};
+		command.stderr.on("data", onData);
+		command.stdout.on("data", onData);
+	});
+	return command
 }
 
 export default describeWithSubstrate
