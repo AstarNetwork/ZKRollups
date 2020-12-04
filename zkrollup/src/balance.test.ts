@@ -4,7 +4,7 @@
 
 import describeWithSubstrate from './blockchain'
 
-describeWithSubstrate("KZ Rollup Contracts Test", (web3) => {
+describeWithSubstrate("EVM Balance Test", web3 => {
     const account = "0x6be02d1d3665660d22ff9624b7be0551ee1ac91b"
     const accountBalance = '100000000000000000000'
 
