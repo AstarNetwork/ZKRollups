@@ -1,5 +1,17 @@
+import Web3 from 'web3'
+import web3 from './web3'
 import { port, rpcPort, wsPort, specFile, target } from './config'
-import { spawn } from 'child_process'
+import { spawn, ChildProcess } from 'child_process'
+
+const describeWithSubstrate = (title: string, test: (web3: Web3) => void) => {
+	describe(title, () => {
+		let command: ChildProcess
+
+		beforeEach(async () => {command = buildChain()})
+		afterAll(() => command.kill())
+		test(web3)
+	})
+}
 
 const buildChain = () => {
     const args = [
@@ -21,4 +33,4 @@ const buildChain = () => {
     return command
 }
 
-buildChain()
+export default describeWithSubstrate
