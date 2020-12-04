@@ -27,7 +27,7 @@
       "palletEthereum": {},
       "palletEvm": {
         "accounts": {
-          "0x6be02d1d3665660d22ff9624b7be0551ee1ac91b": {
+          "0x17a4dC4aF1FAF9c3Db0515a170491c37eb0373Dc": {
             "nonce": "0x0",
             "balance": "0x56BC75E2D63100000",
             "storage": {},

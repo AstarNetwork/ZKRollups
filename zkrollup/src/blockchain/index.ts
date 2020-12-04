@@ -46,3 +46,4 @@ const initCommand = async (args: string[]): Promise<ChildProcess> => {
 }
 
 export default describeWithSubstrate
+export { sendRawTx } from './web3'
