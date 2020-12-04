@@ -1,6 +1,6 @@
 import Web3 from "web3";
-import { wsPort } from './config'
+import { rpcPort } from './config'
 
-const web3 = new Web3(`http://localhost:${wsPort}`)
+const web3 = new Web3(`http://localhost:${rpcPort}`)
 
 export default web3

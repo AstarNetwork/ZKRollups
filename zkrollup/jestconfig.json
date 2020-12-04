@@ -2,5 +2,5 @@
     "transform": {
       "^.+\\.(t|j)sx?$": "ts-jest"
     },
-    "moduleFileExtensions": ["ts", "json"]
+    "moduleFileExtensions": ["js", "ts", "json"]
 }

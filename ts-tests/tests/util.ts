@@ -115,6 +115,7 @@ export async function startFrontierNode(specFilename: string, provider?: string)
 		binary.stdout.on("data", onData);
 	});
 
+	console.log(provider)
 	if (provider == 'ws') {
 		web3 = new Web3(`ws://localhost:${WS_PORT}`);
 	}
