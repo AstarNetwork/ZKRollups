@@ -1,0 +1,7 @@
+{
+    "transform": {
+      "^.+\\.(t|j)sx?$": "ts-jest"
+    },
+    "testRegex": "(/src/.*|(\\.|/)(test|spec))\\.(ts?)$",
+    "moduleFileExtensions": ["js", "ts", "json", "node"]
+}
