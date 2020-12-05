@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-cd ts-tests
+cd zkrollup
 npm i
 npm run test
