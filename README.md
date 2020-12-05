@@ -1,4 +1,5 @@
 # ZK Rollups
+![EVM](https://github.com/staketechnologies/ZKRollups/workflows/EVM/badge.svg)![Rust](https://github.com/staketechnologies/ZKRollups/workflows/Rust/badge.svg)  
 ZK Rollups pallet implementation
 
 ## Build

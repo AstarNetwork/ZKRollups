@@ -24,9 +24,9 @@ jobs:
       env:
         WASM_BUILD_TOOLCHAIN: nightly-2020-08-29
     - name: Build
-      run: cargo build --verbose --all
+      run: cd evmchain && cargo build --verbose --all
     - name: Run tests
-      run: cargo test --verbose --all
+      run: cd evmchain && cargo test --verbose --all
     - name: Use Node.js 10
       uses: actions/setup-node@v1
       with:
