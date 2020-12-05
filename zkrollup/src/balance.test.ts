@@ -2,7 +2,7 @@
  * @jest-environment node
 */
 
-import describeWithSubstrate, { sendRawTx } from './blockchain'
+import describeWithSubstrate, { sendTx } from './blockchain'
 
 describeWithSubstrate("EVM Balance Test", web3 => {
     const account = "0x17a4dC4aF1FAF9c3Db0515a170491c37eb0373Dc"
@@ -19,13 +19,14 @@ describeWithSubstrate("EVM Balance Test", web3 => {
         const tx = await web3.eth.accounts.signTransaction({
             from: account,
             to: recipient,
-            value: 1000000000000000000,
-            gasPrice: 0x01,
+            value: "0x200",
+            gasPrice: "0x01",
             gas: "0x100000"
         }, accoutPrivKey)
-        const result = await sendRawTx([tx.rawTransaction])
-        console.log(result)
-        // const balance = await web3.eth.getBalance(recipient)
-        // expect(balance).toBe("1000000000000000000")
+        const res = await sendTx("eth_sendRawTransaction", [tx.rawTransaction])
+        const res1 = await sendTx("engine_createBlock", [true, true, null])
+        console.log(res, res1)
+        const balance = await web3.eth.getBalance(recipient)
+        expect(balance).toBe("512")
     })
 })

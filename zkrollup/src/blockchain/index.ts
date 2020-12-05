@@ -8,7 +8,7 @@ const describeWithSubstrate = (title: string, test: (web3: Web3) => void) => {
 		let command: ChildProcess
 
 		beforeEach(async () => command = await buildChain())
-		afterAll(() => command.kill())
+		afterAll(async () => await command.kill())
 		test(web3)
 	})
 }
@@ -46,4 +46,4 @@ const initCommand = async (args: string[]): Promise<ChildProcess> => {
 }
 
 export default describeWithSubstrate
-export { sendRawTx } from './web3'
+export { sendTx } from './web3'
