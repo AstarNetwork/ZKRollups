@@ -11,7 +11,7 @@ RUN rustup target add wasm32-unknown-unknown
 
 RUN rustup toolchain install nightly-2020-08-23 &&\
     rustup target add wasm32-unknown-unknown --toolchain nightly-2020-08-23 &&\
-    cargo +nightly-2020-08-23 build
+    cargo +nightly-2020-08-23 build --target x86_64-unknown-linux-musl
 
 FROM node:12.11.1-alpine
 
@@ -24,3 +24,5 @@ COPY zkrollup zkrollup
 RUN cd zkrollup &&\
     npm i &&\
     npm run test
+
+ENTRYPOINT sleep 9000

@@ -16,3 +16,8 @@ $ ./target/release/node-template --dev
 ```
 $ sh scripts/test.sh
 ```
+
+## Docker
+```
+$ docker build .
+```
