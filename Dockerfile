@@ -24,8 +24,8 @@ COPY zkrollup zkrollup
 COPY scripts scripts
 
 RUN apk add --update --upgrade --no-cache \
-    rust=1.44.0-r0 \
-    cargo=1.44.0-r0 &&\
+    rust \
+    cargo &&\
     sh scripts/init.sh
 
 RUN cd zkrollup &&\
