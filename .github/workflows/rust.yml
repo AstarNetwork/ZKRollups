@@ -32,7 +32,7 @@ jobs:
       with:
         node-version: 10
     - name: Copy rust target
-      run: cp evmchain/target .
+      run: cp -r evmchain/target .
     - name: Install functional tests typescript
       run: cd ts-tests && npm install
     - name: Run functional tests
