@@ -8,7 +8,7 @@ const describeWithSubstrate = (title: string, test: (web3: Web3) => void) => {
 		let command: ChildProcess
 
 		beforeEach(async () => command = await buildChain())
-		afterAll(async () => await command.kill())
+		afterEach(async () => await command.kill())
 		test(web3)
 	})
 }

@@ -19,14 +19,13 @@ describeWithSubstrate("EVM Balance Test", web3 => {
         const tx = await web3.eth.accounts.signTransaction({
             from: account,
             to: recipient,
-            value: "0x200",
+            value: 1000000000000000000,
             gasPrice: "0x01",
             gas: "0x100000"
         }, accoutPrivKey)
-        const res = await sendTx("eth_sendRawTransaction", [tx.rawTransaction])
-        const res1 = await sendTx("engine_createBlock", [true, true, null])
-        console.log(res, res1)
+        await sendTx("eth_sendRawTransaction", [tx.rawTransaction])
+        await sendTx("engine_createBlock", [true, true, null])
         const balance = await web3.eth.getBalance(recipient)
-        expect(balance).toBe("512")
+        expect(balance).toBe("1000000000000000000")
     })
 })
