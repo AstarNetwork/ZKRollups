@@ -1,0 +1,11 @@
+version: '3'
+services:
+  substrate:
+    build:
+      context: .
+      dockerfile: DockerfileDev
+    container_name: substrate
+    tty: true
+    stdin_open: true
+    volumes:
+      - "./zkrollup:/app/zkrollup"

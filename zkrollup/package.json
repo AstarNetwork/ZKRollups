@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest src/*.test.ts --config jestconfig.json --silent=false --verbose false"
+    "test": "jest src/*.test.ts --config jestconfig.json --silent=false --verbose false --forceExit"
   },
   "keywords": [],
   "author": "",
