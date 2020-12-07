@@ -1,4 +1,4 @@
-FROM rustlang/rust:nightly as builder
+FROM rustlang/rust:nightly
 
 WORKDIR /app
 
@@ -13,23 +13,13 @@ RUN rustup toolchain install nightly-2020-08-23 &&\
     rustup target add wasm32-unknown-unknown --toolchain nightly-2020-08-23 &&\
     cargo +nightly-2020-08-23 build
 
-FROM node:12.11.1-alpine
-
-WORKDIR /app
-
-COPY --from=builder /app/target target
-
 COPY zkrollup zkrollup
 
-COPY scripts scripts
-
-RUN apk add --update --upgrade --no-cache \
-    rust \
-    cargo &&\
-    sh scripts/init.sh
+RUN apt-get update &&\
+    apt-get -y install curl &&\
+    curl -sL https://deb.nodesource.com/setup_12.x | bash - &&\
+    apt-get -y install nodejs
 
 RUN cd zkrollup &&\
     npm i &&\
     npm run test
-
-ENTRYPOINT sleep 9000
