@@ -4,6 +4,7 @@
 
 import describeWithSubstrate, { sendTx } from './blockchain'
 import { AbiItem } from "web3-utils";
+import Utilities from './utilities'
 
 describeWithSubstrate("EVM Contract Test", web3 => {
     const account = "0x17a4dC4aF1FAF9c3Db0515a170491c37eb0373Dc"
@@ -19,7 +20,8 @@ describeWithSubstrate("EVM Contract Test", web3 => {
         stateMutability: "pure",
         type: "function",
     } as AbiItem;
-    const FIRST_CONTRACT_ADDRESS = "0xc2bf5f29a4384b1ab0c063e1c666f02121b6084a";
+    const utilities = new Utilities(account)
+    const contractAddress = utilities.getContractAddress();
 
     beforeEach(async () => {
         const tx = await web3.eth.accounts.signTransaction(
@@ -32,10 +34,7 @@ describeWithSubstrate("EVM Contract Test", web3 => {
 			},
 			accoutPrivKey
         );
-        console.log(tx.rawTransaction)
-        const res = await sendTx("eth_sendRawTransaction", [tx.rawTransaction]) as any
-        const res2 = await web3.eth.getTransactionReceipt(res.result)
-        // console.log(res2)
+        await sendTx("eth_sendRawTransaction", [tx.rawTransaction]) as any
         await sendTx("engine_createBlock", [true, true, null])
     })
 
@@ -48,12 +47,12 @@ describeWithSubstrate("EVM Contract Test", web3 => {
 		expect(tx.hash).toBe(tx_hash);
     });
 
-    // it("should return contract method result", async function () {
-	// 	const contract = new web3.eth.Contract([TEST_CONTRACT_ABI], FIRST_CONTRACT_ADDRESS, {
-	// 		from: account,
-	// 		gasPrice: "0x02",
-	// 	});
+    it("should return contract method result", async function () {
+		const contract = new web3.eth.Contract([TEST_CONTRACT_ABI], contractAddress, {
+			from: account,
+			gasPrice: "0x02",
+		});
 
-	// 	expect(await contract.methods.multiply(3).call()).toBe("21");
-	// });
+		expect(await contract.methods.multiply(3).call()).toBe("21");
+	});
 })
