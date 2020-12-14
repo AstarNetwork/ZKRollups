@@ -32,6 +32,7 @@ describeWithSubstrate("EVM Contract Test", web3 => {
 			},
 			accoutPrivKey
         );
+        console.log(tx.rawTransaction)
         const res = await sendTx("eth_sendRawTransaction", [tx.rawTransaction]) as any
         const res2 = await web3.eth.getTransactionReceipt(res.result)
         // console.log(res2)
