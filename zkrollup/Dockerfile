@@ -20,10 +20,24 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - &&\
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - &&\
     apt-get install nodejs yarn -y
 
+RUN apt-get install axel -y &&\
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+RUN apt-get install postgresql-client -y &&\
+    apt-get install libpq-dev build-essential pkg-config libssl-dev -y
+
+RUN . $HOME/.cargo/env &&\
+    cargo install diesel_cli --no-default-features --features postgres &&\
+    cargo install --version=0.2.0 sqlx-cli
+
+RUN npm install -g solc
+
 COPY zksync .
 
-RUN echo 'export ZKSYNC_HOME=/app' >> ~/.bashrc &&\
-    echo 'export PATH=$ZKSYNC_HOME/bin:$PATH' >> ~/.bashrc
+ENV PATH=$HOME/.cargo/bin:$PATH
+ENV ZKSYNC_HOME=/app
+ENV PATH=$ZKSYNC_HOME/bin:$PATH
 
-RUN . ~/.bashrc &&\
-    zk init
+ENTRYPOINT sleep 5000
+
+# RUN zk init
