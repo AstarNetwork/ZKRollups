@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest src/*.test.ts --config jestconfig.json --silent=false --verbose false --forceExit"
+    "test": "truffle compile && jest src/*.test.ts --config jestconfig.json --silent=false --verbose false --forceExit"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,7 @@
     "@truffle/hdwallet-provider": "^1.2.0",
     "keccak": "^3.0.1",
     "rlp": "^2.2.6",
+    "truffle": "^5.1.57",
     "web3": "^1.3.0"
   }
 }
