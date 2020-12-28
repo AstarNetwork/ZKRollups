@@ -25,7 +25,6 @@ contract KeysWithPlonkVerifier is VerifierWithDeserialize {
         else if (_chunks == uint32(630)) { return getVkBlock630(); }
     }
 
-    
     function getVkBlock6() internal pure returns(VerificationKey memory vk) {
         vk.domain_size = 2097152;
         vk.num_inputs = 1;
@@ -97,7 +96,7 @@ contract KeysWithPlonkVerifier is VerifierWithDeserialize {
              0x22febda3c0c0632a56475b4214e5615e11e6dd3f96e6cea2854a87d4dacc5e55]
         );
     }
-    
+
     function getVkBlock30() internal pure returns(VerificationKey memory vk) {
         vk.domain_size = 4194304;
         vk.num_inputs = 1;
@@ -169,7 +168,7 @@ contract KeysWithPlonkVerifier is VerifierWithDeserialize {
              0x22febda3c0c0632a56475b4214e5615e11e6dd3f96e6cea2854a87d4dacc5e55]
         );
     }
-    
+
     function getVkBlock74() internal pure returns(VerificationKey memory vk) {
         vk.domain_size = 8388608;
         vk.num_inputs = 1;
@@ -241,7 +240,7 @@ contract KeysWithPlonkVerifier is VerifierWithDeserialize {
              0x22febda3c0c0632a56475b4214e5615e11e6dd3f96e6cea2854a87d4dacc5e55]
         );
     }
-    
+
     function getVkBlock150() internal pure returns(VerificationKey memory vk) {
         vk.domain_size = 16777216;
         vk.num_inputs = 1;
@@ -313,7 +312,7 @@ contract KeysWithPlonkVerifier is VerifierWithDeserialize {
              0x22febda3c0c0632a56475b4214e5615e11e6dd3f96e6cea2854a87d4dacc5e55]
         );
     }
-    
+
     function getVkBlock320() internal pure returns(VerificationKey memory vk) {
         vk.domain_size = 33554432;
         vk.num_inputs = 1;
@@ -385,7 +384,7 @@ contract KeysWithPlonkVerifier is VerifierWithDeserialize {
              0x22febda3c0c0632a56475b4214e5615e11e6dd3f96e6cea2854a87d4dacc5e55]
         );
     }
-    
+
     function getVkBlock630() internal pure returns(VerificationKey memory vk) {
         vk.domain_size = 67108864;
         vk.num_inputs = 1;
@@ -457,7 +456,7 @@ contract KeysWithPlonkVerifier is VerifierWithDeserialize {
              0x22febda3c0c0632a56475b4214e5615e11e6dd3f96e6cea2854a87d4dacc5e55]
         );
     }
-    
+
     function getVkExit() internal pure returns(VerificationKey memory vk) {
         vk.domain_size = 262144;
         vk.num_inputs = 1;
@@ -529,6 +528,4 @@ contract KeysWithPlonkVerifier is VerifierWithDeserialize {
              0x22febda3c0c0632a56475b4214e5615e11e6dd3f96e6cea2854a87d4dacc5e55]
         );
     }
-    
-
 }
