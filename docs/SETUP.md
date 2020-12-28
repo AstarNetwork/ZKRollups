@@ -10,8 +10,10 @@ Describe how to setup Zksync env on Ubuntu.
 ## TLDR
 I did following command on AWS Ubuntu 18.04 and **this didn't work on Docker Ubuntu image**.
 ```
-$ wget https://raw.githubusercontent.com/PlasmNetwork/ZKRollups/master/zkrollup/scripts/ubuntu.sh
-$ sh ubuntu.sh
+$ wget https://raw.githubusercontent.com/PlasmNetwork/ZKRollups/master/zkrollup/scripts/ubuntu1.sh
+$ wget https://raw.githubusercontent.com/PlasmNetwork/ZKRollups/master/zkrollup/scripts/ubuntu2.sh
+$ sh ubuntu1.sh
+$ sh ubuntu2.sh
 ```
 
 ## Install Dependencies
