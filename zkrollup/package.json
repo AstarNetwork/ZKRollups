@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "compile": "truffle compile",
     "test": "truffle compile && jest src/*.test.ts --config jestconfig.json --silent=false --verbose false --forceExit"
   },
   "keywords": [],
