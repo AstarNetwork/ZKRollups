@@ -1,0 +1,16 @@
+version: '3'
+services:
+  operator:
+    image: zksync/server
+    container_name: operator
+    tty: true
+    stdin_open: true
+    ports:
+      - "3000:3000"
+      - "3031:3031"
+      - "3030:3030"
+  prover:
+    image: zksync/prover
+    container_name: prover
+    tty: true
+    stdin_open: true
