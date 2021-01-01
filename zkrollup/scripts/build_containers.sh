@@ -2,7 +2,7 @@
 
 echo "Prepare Contracts..."
 yarn compile
-cp -r build zksync/contracts/build
+cp -r build/contracts/ zksync/contracts/build/
 
 echo "Build Server And Prover..."
 DOCKER_BUILDKIT=1 docker build --ssh default -f zksync/docker/server/Dockerfile zksync -t zksync/server
