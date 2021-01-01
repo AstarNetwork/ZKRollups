@@ -4,6 +4,9 @@ The archive of important commands and articles to build environment.
 ### Update Ubuntu group without log out
 https://superuser.com/questions/272061/reload-a-linux-users-group-assignments-without-logging-out
 
+### Docker can't build on docker container
+https://esakat.github.io/esakat-blog/posts/docker-in-docker/
+
 ### Install solc version 0.5.16
 https://snapcraft.io/install/solc/ubuntu
 
