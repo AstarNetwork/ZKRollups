@@ -53,6 +53,12 @@ services:
     container_name: prover
     tty: true
     stdin_open: true
+    environment:
+      - PROVER_SECRET_AUTH=sample
+      - ETH_NETWORK=localhost
+      - PROVER_SERVER_PORT=8088
+      - WITNESS_GENERATORS=2
+      - IDLE_PROVERS=1
   postgres:
     image: zksync/postgres
     container_name: postgres
