@@ -6,7 +6,7 @@ services:
     tty: true
     stdin_open: true
     environment:
-      - DATABASE_URL=postgres://postgres:password@postgres:5432/zksync
+      - DATABASE_URL=postgres://postgres:password@localhost:5432/zksync
       - DB_POOL_SIZE=10
       - BLOCK_CHUNK_SIZES=6,30
       - WEB3_URL=http://127.0.0.1:8545
