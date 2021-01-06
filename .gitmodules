@@ -1,3 +1,6 @@
 [submodule "zkrollup/zksync"]
 	path = zkrollup/zksync
 	url = https://github.com/ArtreeTechnologies/zksync
+[submodule "blockchain"]
+	path = blockchain
+	url = https://github.com/ArtreeTechnologies/frontier

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+cd zkrollup
+
 echo "Prepare Contracts..."
 yarn compile
 cp -r build/contracts/ zksync/contracts/build/
