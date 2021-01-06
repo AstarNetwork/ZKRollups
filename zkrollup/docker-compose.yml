@@ -44,6 +44,8 @@ services:
       - PRIVATE_CORE_SERVER_PORT=8090
       - PRIVATE_CORE_SERVER_URL=http://127.0.0.1:8090
       - API_REQUESTS_CACHES_SIZE=10000
+      - ZKSYNC_HOME=/usr/src/zksync
+      - GENESIS_ROOT=/usr/src/zksync/genesis.log
     ports:
       - "3000:3000"
       - "3031:3031"

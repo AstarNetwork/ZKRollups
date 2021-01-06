@@ -16,16 +16,14 @@ describeWithSubstrate("EVM Contract Test", web3 => {
     const contractAddress = utilities.getContractAddress();
 
     beforeEach(async () => {
-        const tx = await web3.eth.accounts.signTransaction(
-			{
+        const tx = await web3.eth.accounts.signTransaction({
 				from: account,
 				data: TEST_CONTRACT_BYTECODE,
 				value: "0x00",
 				gasPrice: "0x01",
 				gas: "0x100000",
 			},
-			accoutPrivKey
-        );
+			accoutPrivKey);
         await sendTx("eth_sendRawTransaction", [tx.rawTransaction]) as any
         await sendTx("engine_createBlock", [true, true, null])
     })
