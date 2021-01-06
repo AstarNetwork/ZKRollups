@@ -1,5 +1,5 @@
 ## Project Overview :page_facing_up:
-![EVM](https://github.com/PlasmNetwork/ZKRollups/workflows/EVM/badge.svg)![Rust](https://github.com/PlasmNetwork/ZKRollups/workflows/Rust/badge.svg)  
+![EVM](https://github.com/PlasmNetwork/ZKRollups/workflows/EVM/badge.svg)!  
 We believe that ZK Rollup is the killer layer2 solution in the coming months and some of the top projects will use this technology to make DApps scalable. 
 
 ZK Rollup is valuable for Polkadot Parachain as described below.
@@ -17,14 +17,10 @@ Our milestone1 is to deploy [matter-labs](https://github.com/matter-labs/zksync)
 | 2. | Integration Test on Substrate | Test for all contracts and sidechain network actors |  
 | 3. | Documentation | Document which describes how to test ZK Rollup on substrate |
 
-## Build
+## Setup
 ```
-$ sh scripts/build.sh
-```
-## Start
-```
-$ ./target/release/node-template purge-chain --dev
-$ ./target/release/node-template --dev
+$ sh scripts/containers.sh
+$ docker-compose up
 ```
 ## Test
 ```

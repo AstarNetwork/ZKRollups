@@ -21,6 +21,7 @@ polkadot.*
 
 # Added by cargo
 /target
+Cargo.lock
 
 # NixOS development environment
 .envrc

@@ -1,11 +1,11 @@
 version: '3'
 services:
   substrate:
-    build:
-      context: .
-      dockerfile: DockerfileDev
+    build: blockchain
     container_name: substrate
     tty: true
     stdin_open: true
-    volumes:
-      - "./zkrollup:/app/zkrollup"
+    ports:
+      - "2000:2000"
+      - "3000:3000"
+      - "4000:4000"
