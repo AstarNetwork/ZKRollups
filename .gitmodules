@@ -1,0 +1,3 @@
+[submodule "zkrollup/zksync"]
+	path = zkrollup/zksync
+	url = https://github.com/ArtreeTechnologies/zksync
