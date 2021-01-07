@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+*/
+
 import Utilities from './utilities'
 
 describe("Contract Address Test", () => {
