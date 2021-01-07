@@ -9,3 +9,8 @@ services:
       - "2000:2000"
       - "3000:3000"
       - "4000:4000"
+  test:
+    build: test
+    container_name: test
+    tty: true
+    stdin_open: true

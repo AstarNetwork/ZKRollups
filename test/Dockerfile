@@ -6,4 +6,4 @@ COPY . .
 
 RUN yarn
 
-ENTRYPOINT yarn test
+ENTRYPOINT sleep 5000
