@@ -27,6 +27,7 @@ const buildChain = async () => {
 		`--rpc-port=${rpcPort}`,
 		`--ws-port=${wsPort}`,
 		`--tmp`,
+		`--unsafe-rpc-external`
 	]
     return await initCommand(args)
 }

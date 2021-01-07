@@ -1,9 +1,10 @@
-FROM node:12.11.1-alpine
+FROM node:12.0.0-alpine
 
 WORKDIR /app
 
-COPY . .
+COPY package.json .
+COPY yarn.lock .
 
-RUN yarn
+RUN yarn install --frozen-lockfile
 
 ENTRYPOINT sleep 5000

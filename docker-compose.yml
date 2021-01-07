@@ -14,3 +14,5 @@ services:
     container_name: test
     tty: true
     stdin_open: true
+    volumes:
+      - ./test:/app

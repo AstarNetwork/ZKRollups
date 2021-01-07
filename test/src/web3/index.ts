@@ -1,6 +1,6 @@
 import Web3 from "web3";
 
-const web3 = new Web3(`http://localhost:3000`)
+const web3 = new Web3(`http://substrate:3000`)
 
 export const sendTx = async (method: string, params: any) =>
     new Promise((resolve, reject) => {
