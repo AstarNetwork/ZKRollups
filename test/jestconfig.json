@@ -1,0 +1,7 @@
+{
+    "transform": {
+      "^.+\\.(t|j)sx?$": "ts-jest"
+    },
+    "moduleFileExtensions": ["js", "ts", "json"],
+    "testTimeout": 30000
+}
