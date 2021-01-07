@@ -1,8 +1,6 @@
-/**
- * @jest-environment node
-*/
-
 import web3, { sendTx } from './web3'
+import { expect } from "chai";
+import { step } from "mocha-steps";
 
 describe("EVM Balance Test", () => {
     const account = "0x17a4dC4aF1FAF9c3Db0515a170491c37eb0373Dc"
@@ -12,7 +10,7 @@ describe("EVM Balance Test", () => {
 
     it('Balance Test', async () => {
         const balance = await web3.eth.getBalance(account)
-        expect(balance).toBe(accountBalance)
+        expect(balance).to.equal(accountBalance)
     })
 
     it('Transfer Test', async () => {
@@ -26,6 +24,6 @@ describe("EVM Balance Test", () => {
         await sendTx("eth_sendRawTransaction", [tx.rawTransaction])
         await sendTx("engine_createBlock", [true, true, null])
         const balance = await web3.eth.getBalance(recipient)
-        expect(balance).toBe("1000000000000000000")
+        expect(balance).to.equal("1000000000000000000")
     })
 })

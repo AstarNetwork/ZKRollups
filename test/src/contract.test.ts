@@ -1,11 +1,9 @@
-/**
- * @jest-environment node
-*/
-
 import web3, { sendTx } from './web3'
 import { AbiItem } from "web3-utils";
 import Utilities from './utilities'
 import ContractJson from '../build/contracts/Test.json'
+import { expect } from "chai";
+import { step } from "mocha-steps";
 
 describe("EVM Contract Test", () => {
     const account = "0x17a4dC4aF1FAF9c3Db0515a170491c37eb0373Dc"
@@ -15,7 +13,8 @@ describe("EVM Contract Test", () => {
     const utilities = new Utilities(account)
     const contractAddress = utilities.getContractAddress();
 
-    beforeEach(async () => {
+    before(async () => {
+      console.log(TEST_CONTRACT_BYTECODE)
         const tx = await web3.eth.accounts.signTransaction({
 				from: account,
 				data: TEST_CONTRACT_BYTECODE,
@@ -28,12 +27,12 @@ describe("EVM Contract Test", () => {
         await sendTx("engine_createBlock", [true, true, null])
     })
 
-    it("Deployed Hash Test", async () => {
-		const contract = new web3.eth.Contract([TEST_CONTRACT_ABI], contractAddress, {
-			from: account,
-			gasPrice: "0x02",
-        });
-        const four = await contract.methods.double(2).call({ from: account })
-		expect(four).toBe("4");
+    step("Deployed Hash Test", async () => {
+		  const contract = new web3.eth.Contract([TEST_CONTRACT_ABI], contractAddress, {
+        from: account,
+        gasPrice: "0x02",
+      });
+      const four = await contract.methods.double(2).call({ from: account })
+		  expect(four).to.equal("4");
     });
 })
