@@ -4,14 +4,14 @@ import "openzeppelin-solidity/contracts/token/ERC20/ERC20Detailed.sol";
 import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 
 contract TestnetERC20Token is ERC20, ERC20Detailed {
-    constructor(
-        string memory name,
-        string memory symbol,
-        uint8 decimals
-    ) public ERC20Detailed(name, symbol, decimals) {}
+    constructor() public ERC20Detailed('DAI', 'DAI', 18) {}
 
     function mint(address _to, uint256 _amount) public returns (bool) {
         _mint(_to, _amount);
         return true;
+    }
+
+    function hello() public view returns (string memory) {
+        return 'hello';
     }
 }

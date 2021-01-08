@@ -7,4 +7,4 @@ COPY yarn.lock .
 
 RUN yarn install --frozen-lockfile
 
-ENTRYPOINT yarn test
+ENTRYPOINT sleep 5000

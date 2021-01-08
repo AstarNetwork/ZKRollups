@@ -5,13 +5,13 @@
 import describeWithSubstrate, { sendTx } from './blockchain'
 import { AbiItem } from "web3-utils";
 import Utilities from './utilities'
-import ContractJson from '../build/contracts/Test.json'
+import ContractJson from '../build/contracts/TestnetERC20Token.json'
 
 describeWithSubstrate("EVM Contract Test", web3 => {
     const account = "0x17a4dC4aF1FAF9c3Db0515a170491c37eb0373Dc"
     const accoutPrivKey = "0x4dc023426c7bbd647cc9789343ac495225ff11aff3463b85dac0f503b70a119d"
     const TEST_CONTRACT_BYTECODE = ContractJson.bytecode;
-    const TEST_CONTRACT_ABI = ContractJson.abi[0] as AbiItem;
+    const TEST_CONTRACT_ABI = ContractJson.abi as AbiItem[];
     const utilities = new Utilities(account)
     const contractAddress = utilities.getContractAddress();
 
@@ -29,11 +29,11 @@ describeWithSubstrate("EVM Contract Test", web3 => {
     })
 
     it("Deployed Hash Test", async () => {
-		const contract = new web3.eth.Contract([TEST_CONTRACT_ABI], contractAddress, {
+		const contract = new web3.eth.Contract(TEST_CONTRACT_ABI, contractAddress, {
 			from: account,
 			gasPrice: "0x02",
         });
-    const four = await contract.methods.double(2).call({ from: account })
+        const four = await contract.methods.hello().call({ from: account })
 		expect(four).toBe("4");
     });
 })
