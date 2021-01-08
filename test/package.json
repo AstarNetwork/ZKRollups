@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "compile": "truffle compile",
-    "test": "truffle compile && mocha -r ts-node/register 'src/**/*.ts'"
+    "test": "truffle compile && mocha -r ts-node/register 'src/**/*.test.ts'"
   },
   "keywords": [],
   "author": "",

@@ -14,7 +14,6 @@ describe("EVM Contract Test", () => {
     const contractAddress = utilities.getContractAddress();
 
     before(async () => {
-      console.log(TEST_CONTRACT_BYTECODE)
         const tx = await web3.eth.accounts.signTransaction({
 				from: account,
 				data: TEST_CONTRACT_BYTECODE,
