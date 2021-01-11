@@ -2,13 +2,13 @@
 
 (mkdir keys/setup
 cd keys/setup
-axel -c https://universal-setup.ams3.digitaloceanspaces.com/setup_2%5E.20key
-axel -c https://universal-setup.ams3.digitaloceanspaces.com/setup_2%5E.21key
-axel -c https://universal-setup.ams3.digitaloceanspaces.com/setup_2%5E.22key
-axel -c https://universal-setup.ams3.digitaloceanspaces.com/setup_2%5E.23key
-axel -c https://universal-setup.ams3.digitaloceanspaces.com/setup_2%5E.24key
-axel -c https://universal-setup.ams3.digitaloceanspaces.com/setup_2%5E.25key
-axel -c https://universal-setup.ams3.digitaloceanspaces.com/setup_2%5E.26key)
+axel -c https://universal-setup.ams3.digitaloceanspaces.com/setup_2%5E20.key
+axel -c https://universal-setup.ams3.digitaloceanspaces.com/setup_2%5E21.key
+axel -c https://universal-setup.ams3.digitaloceanspaces.com/setup_2%5E22.key
+axel -c https://universal-setup.ams3.digitaloceanspaces.com/setup_2%5E23.key
+axel -c https://universal-setup.ams3.digitaloceanspaces.com/setup_2%5E24.key
+axel -c https://universal-setup.ams3.digitaloceanspaces.com/setup_2%5E25.key
+axel -c https://universal-setup.ams3.digitaloceanspaces.com/setup_2%5E26.key)
 
 tar xf keys/packed/verify-keys-plonk-6e2f649-account-24_-balance-8.tar.gz
 tar xf keys/packed/verify-keys-plonk-adc439-account-24_-balance-8.tar.gz
@@ -27,7 +27,7 @@ tar xf keys/packed/verify-keys-plonk-3772d44-account-32_-balance-11.tar.gz
 tar xf keys/packed/verify-keys-plonk-9e9d4e9d-account-32_-balance-11.tar.gz
 
 (cd core/lib/storage
+export DATABASE_URL=postgres://postgres@localhost/plasma
 diesel database setup
 diesel migration run
-cargo sqlx prepare --check || cargo sqlx prepare
-export DATABASE_URL=postgres://postgres@localhost/plasma)
+cargo sqlx prepare --check || cargo sqlx prepare)
