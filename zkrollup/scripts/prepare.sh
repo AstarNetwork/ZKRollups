@@ -14,6 +14,8 @@ echo 'export ZKSYNC_HOME=/home/ubuntu/zksync' >> ~/.bashrc
 echo 'export PATH=$ZKSYNC_HOME/bin:$PATH' >> ~/.bashrc
 . ~/.bashrc
 
+cd zksync
+
 docker-compose up -d postgres geth dev-ticker
 docker-compose up -d tesseracts
 yarn
@@ -56,6 +58,7 @@ echo "[]" > etc/tokens/localhost.json
 
 export ETH_NETWORK=localhost
 cargo run --release --bin gen_token_add_contract
+cp keys/plonk-975ae851/account-32_balance-11/KeysWithPlonkVerifier.sol contracts/contracts/
 yarn contracts build
 
 export OPERATOR_PRIVATE_KEY=4dc023426c7bbd647cc9789343ac495225ff11aff3463b85dac0f503b70a119d
@@ -139,17 +142,16 @@ cargo run --bin zksync_server --release -- --genesis | tee genesis.log
 export `cat genesis.log`
 yarn contracts deploy-no-build | tee deploy.log
 
-# export GOVERNANCE_TARGET_ADDR=0xc56E79CAA94C96DE01eF36560ac215cC7A4F0F47
-# export VERIFIER_TARGET_ADDR=0x572b9410D9a14Fa729F3af92cB83A07aaA472dE0
-# export CONTRACT_TARGET_ADDR=0x5E6D086F5eC079ADFF4FB3774CDf3e8D6a34F7E9
-# export GOVERNANCE_ADDR=0xF383bd74c2F80Eb03e82Bf7F0aCb3e869dBfA324
-# export CONTRACT_ADDR=0xBa2fE1C0669B28fbA1537DE8F893B356A41701bB
-# export VERIFIER_ADDR=0x9EE6D7616Deb793FBf71103026DE427AB27161A4
-# export export GATEKEEPER_ADDR=0x55f6Eb643438a7C116E818F8104edA87c3F08D0d
-# export DEPLOY_FACTORY_ADDR=0x70a0F165d6f8054d0d0CF8dFd4DD2005f0AF6B55
-# export GATEKEEPER_ADDR=0x55f6Eb643438a7C116E818F8104edA87c3F08D0d
-# export GENESIS_TX_HASH=0x42e2203adf9aa9aae55a67d52181fb2a48f94bf7a0faa0bff6cc039e202c430f
-# psql "postgres://postgres@localhost/plasma" -c "INSERT INTO server_config (contract_addr, gov_contract_addr) VALUES ('0xBa2fE1C0669B28fbA1537DE8F893B356A41701bB', '0xF383bd74c2F80Eb03e82Bf7F0aCb3e869dBfA324') ON CONFLICT (id) DO UPDATE SET (contract_addr, gov_contract_addr) = ('0xBa2fE1C0669B28fbA1537DE8F893B356A41701bB', '0xF383bd74c2F80Eb03e82Bf7F0aCb3e869dBfA324');"
+export GOVERNANCE_TARGET_ADDR=0xc56E79CAA94C96DE01eF36560ac215cC7A4F0F47
+export VERIFIER_TARGET_ADDR=0x572b9410D9a14Fa729F3af92cB83A07aaA472dE0
+export CONTRACT_TARGET_ADDR=0x5E6D086F5eC079ADFF4FB3774CDf3e8D6a34F7E9
+export GOVERNANCE_ADDR=0xF383bd74c2F80Eb03e82Bf7F0aCb3e869dBfA324
+export CONTRACT_ADDR=0xBa2fE1C0669B28fbA1537DE8F893B356A41701bB
+export VERIFIER_ADDR=0x9EE6D7616Deb793FBf71103026DE427AB27161A4
+export DEPLOY_FACTORY_ADDR=0x70a0F165d6f8054d0d0CF8dFd4DD2005f0AF6B55
+export GATEKEEPER_ADDR=0x55f6Eb643438a7C116E818F8104edA87c3F08D0d
+export GENESIS_TX_HASH=0x42e2203adf9aa9aae55a67d52181fb2a48f94bf7a0faa0bff6cc039e202c430f
+psql "postgres://postgres@localhost/plasma" -c "INSERT INTO server_config (contract_addr, gov_contract_addr) VALUES ('0xBa2fE1C0669B28fbA1537DE8F893B356A41701bB', '0xF383bd74c2F80Eb03e82Bf7F0aCb3e869dBfA324') ON CONFLICT (id) DO UPDATE SET (contract_addr, gov_contract_addr) = ('0xBa2fE1C0669B28fbA1537DE8F893B356A41701bB', '0xF383bd74c2F80Eb03e82Bf7F0aCb3e869dBfA324');"
 
 yarn contracts publish-sources
 psql "postgres://postgres@localhost/plasma" -c "INSERT INTO eth_parameters (nonce, gas_price_limit, commit_ops, verify_ops, withdraw_ops) VALUES ('0', '400000000000', 0, 0, 0) ON CONFLICT (id) DO UPDATE SET (commit_ops, verify_ops, withdraw_ops) = (0, 0, 0)"
