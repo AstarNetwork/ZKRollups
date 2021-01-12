@@ -1,5 +1,19 @@
 #!/bin/sh
 
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+. $HOME/.cargo/env
+cargo install diesel_cli --no-default-features --features postgres
+cargo install --version=0.2.0 sqlx-cli
+
+(git clone https://github.com/ArtreeTechnologies/zksync
+cd zksync/infrastructure/zk
+npm i
+npm run build)
+
+echo 'export ZKSYNC_HOME=/home/ubuntu/zksync' >> ~/.bashrc
+echo 'export PATH=$ZKSYNC_HOME/bin:$PATH' >> ~/.bashrc
+. ~/.bashrc
+
 docker-compose up -d postgres geth dev-ticker
 docker-compose up -d tesseracts
 yarn
