@@ -1,6 +1,6 @@
 pragma solidity ^0.5.8;
 
-import "./IERC20.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
 
 import "./Governance.sol";
 import "./Verifier.sol";

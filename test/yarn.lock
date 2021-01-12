@@ -2962,6 +2962,11 @@ once@^1.3.0, once@^1.3.1, once@^1.4.0:
   dependencies:
     wrappy "1"
 
+openzeppelin-solidity@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/openzeppelin-solidity/-/openzeppelin-solidity-3.3.0.tgz#20844436e84fa2d76ffe8c8ff7613acbfe6132c8"
+  integrity sha512-hTgOBwCGxJEn6KnNaSzCKYT72aw84VpBl9AuZSLqpxFoQIr0ST/06M2jTVlv+YEQu2q4kq+1GU8CaTBmOotrgA==
+
 original-require@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/original-require/-/original-require-1.0.1.tgz#0f130471584cd33511c5ec38c8d59213f9ac5e20"

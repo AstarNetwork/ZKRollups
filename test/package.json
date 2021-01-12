@@ -23,6 +23,7 @@
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.2.0",
     "keccak": "^3.0.1",
+    "openzeppelin-solidity": "^3.3.0",
     "rlp": "^2.2.6",
     "truffle": "^5.1.57",
     "web3": "1.2.9"
