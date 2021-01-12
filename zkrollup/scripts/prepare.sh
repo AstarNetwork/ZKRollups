@@ -31,3 +31,5 @@ export DATABASE_URL=postgres://postgres@localhost/plasma
 diesel database setup
 diesel migration run
 cargo sqlx prepare --check || cargo sqlx prepare)
+
+cat etc/env/dev.env.example >> ~/.bashrc
