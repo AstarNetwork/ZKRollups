@@ -43,7 +43,7 @@ export async function createAndFinalizeBlock(web3: Web3) {
 	}
 }
 
-export function describeWithFrontier(title: string, specFilename: string, cb: (context: { web3: Web3 }) => void, provider?: string) {
+export function describeWithFrontier(title: string, cb: (context: { web3: Web3 }) => void, provider?: string) {
 	describe(title, () => {
 		let context: { web3: Web3 } = { web3: null };
 		// Making sure the Frontier node has started
