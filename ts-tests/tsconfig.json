@@ -1,5 +1,9 @@
 {
-    "compilerOptions": {
-      "esModuleInterop": true
-    }
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true
   }
+}

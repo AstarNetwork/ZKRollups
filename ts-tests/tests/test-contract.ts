@@ -1,5 +1,5 @@
 import { expect } from "chai";
-
+import ZkSync from '../build/contracts/ZkSync.json'
 import { createAndFinalizeBlock, customRequest, describeWithFrontier } from "./util";
 
 describeWithFrontier("Frontier RPC (Contract)", (context) => {
@@ -7,8 +7,7 @@ describeWithFrontier("Frontier RPC (Contract)", (context) => {
 	const GENESIS_ACCOUNT_PRIVATE_KEY = "0x99B3C12287537E38C90A9219D4CB074A89A16E9CDB20BF85728EBD97C343E342";
 
 	// Solidity: contract test { function multiply(uint a) public pure returns(uint d) {return a * 7;}}
-	const TEST_CONTRACT_BYTECODE =
-		"0x6080604052348015600f57600080fd5b5060ae8061001e6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c8063c6888fa114602d575b600080fd5b605660048036036020811015604157600080fd5b8101908080359060200190929190505050606c565b6040518082815260200191505060405180910390f35b600060078202905091905056fea265627a7a72315820f06085b229f27f9ad48b2ff3dd9714350c1698a37853a30136fa6c5a7762af7364736f6c63430005110032";
+	const TEST_CONTRACT_BYTECODE = ZkSync.bytecode
 	const FIRST_CONTRACT_ADDRESS = "0xc2bf5f29a4384b1ab0c063e1c666f02121b6084a";
 	// Those test are ordered. In general this should be avoided, but due to the time it takes
 	// to spin up a frontier node, it saves a lot of time.
@@ -20,24 +19,25 @@ describeWithFrontier("Frontier RPC (Contract)", (context) => {
 				from: GENESIS_ACCOUNT,
 				data: TEST_CONTRACT_BYTECODE,
 				value: "0x00",
-				gasPrice: "0x01",
-				gas: "0x100000",
+				gasPrice: 20000000000,
+				gas: 1000000000000,
 			},
 			GENESIS_ACCOUNT_PRIVATE_KEY
 		);
 
-		expect(await customRequest(context.web3, "eth_sendRawTransaction", [tx.rawTransaction])).to.deep.equal({
+		await customRequest(context.web3, "eth_sendRawTransaction", [tx.rawTransaction]);
+
+		expect(await customRequest(context.web3, "eth_getCode", [FIRST_CONTRACT_ADDRESS])).to.deep.equal({
 			id: 1,
 			jsonrpc: "2.0",
-			result: "0x223c8eb5998d6f436a0780a455f24d37d9e0aa64e35c3950abe365ee9e171700",
+			result: "0x",
 		});
 
 		await createAndFinalizeBlock(context.web3);
 		expect(await customRequest(context.web3, "eth_getCode", [FIRST_CONTRACT_ADDRESS])).to.deep.equal({
 			id: 1,
 			jsonrpc: "2.0",
-			result:
-				"0x6080604052348015600f57600080fd5b506004361060285760003560e01c8063c6888fa114602d575b600080fd5b605660048036036020811015604157600080fd5b8101908080359060200190929190505050606c565b6040518082815260200191505060405180910390f35b600060078202905091905056fea265627a7a72315820f06085b229f27f9ad48b2ff3dd9714350c1698a37853a30136fa6c5a7762af7364736f6c63430005110032",
+			result: TEST_CONTRACT_BYTECODE,
 		});
 	});
 });
