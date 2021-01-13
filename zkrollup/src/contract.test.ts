@@ -14,6 +14,7 @@ describeWithSubstrate("EVM Contract Test", web3 => {
     const TEST_CONTRACT_ABI = ContractJson.abi[0] as AbiItem;
     const utilities = new Utilities(account)
     const contractAddress = utilities.getContractAddress();
+    console.log(contractAddress)
 
     beforeEach(async () => {
         const tx = await web3.eth.accounts.signTransaction({
