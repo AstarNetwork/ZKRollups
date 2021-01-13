@@ -10,9 +10,9 @@ services:
       - "3000:3000"
       - "4000:4000"
   test:
-    build: test
+    build: ts-tests
     container_name: test
     tty: true
     stdin_open: true
     volumes:
-      - ./test:/app
+      - ./ts-tests:/app
