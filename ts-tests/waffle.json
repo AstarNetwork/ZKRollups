@@ -1,0 +1,12 @@
+{
+    "sourceDirectory": "./contracts",
+    "outputDirectory": "./build",
+    "compilerType": "solcjs",
+    "compilerVersion": "0.5.12",
+    "compilerOptions": {
+        "optimizer": {
+            "enabled": true,
+            "runs": 200
+        }
+    }
+}

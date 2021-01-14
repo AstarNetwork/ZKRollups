@@ -1,10 +1,13 @@
-FROM node:12.0.0-alpine
+FROM node:14.15.4-alpine
 
 WORKDIR /app
 
 COPY package.json .
 COPY yarn.lock .
 
-RUN yarn install --frozen-lockfile
+RUN apk add git &&\
+    yarn install --frozen-lockfile
 
-ENTRYPOINT yarn test
+ENTRYPOINT sleep 5000
+
+# ENTRYPOINT yarn test

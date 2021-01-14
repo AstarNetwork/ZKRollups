@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import ZkSync from '../build/contracts/ZkSync.json'
+import ZkSync from '../build/ZkSync.json'
 import { createAndFinalizeBlock, customRequest, describeWithFrontier } from "./util";
 
 describeWithFrontier("Frontier RPC (Contract)", (context) => {
