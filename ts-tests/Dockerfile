@@ -8,6 +8,4 @@ COPY yarn.lock .
 RUN apk add git &&\
     yarn install --frozen-lockfile
 
-ENTRYPOINT sleep 5000
-
-# ENTRYPOINT yarn test
+ENTRYPOINT yarn test

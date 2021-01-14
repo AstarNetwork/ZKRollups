@@ -1,4 +1,6 @@
 import Web3 from "web3";
+import * as rlp from 'rlp'
+import keccak from 'keccak'
 import { JsonRpcResponse } from "web3-core-helpers";
 
 export const PORT = 2000;
@@ -10,6 +12,28 @@ export const FRONTIER_LOG = process.env.FRONTIER_LOG || "info";
 
 export const BINARY_PATH = `../target/debug/frontier-template-node`;
 export const SPAWNING_TIME = 30000;
+
+export default class Utilities {
+    address: string
+    nonce: number
+
+    constructor(address: string) {
+        this.address = address
+        this.nonce = 0x00
+    }
+
+    getContractAddress = (): string => {
+        const contractAddress = this.calculateContractAddress()
+        this.nonce++
+        return contractAddress
+    }
+
+    private calculateContractAddress = (): string => {
+        const encoded = rlp.encode([this.address, this.nonce])
+        const contractHex = keccak('keccak256').update(encoded).digest('hex')
+        return "0x" + contractHex.substring(24)
+    }
+}
 
 export async function customRequest(web3: Web3, method: string, params: any[]) {
 	return new Promise<JsonRpcResponse>((resolve, reject) => {
