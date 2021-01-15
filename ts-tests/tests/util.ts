@@ -30,7 +30,12 @@ export default class Utilities {
         const contractAddress = this.calculateContractAddress()
         this.nonce++
         return contractAddress
-    }
+	}
+
+	incrementNonce = () => {
+		this.nonce++
+		return this
+	}
 
     private calculateContractAddress = (): string => {
         const encoded = rlp.encode([this.address, this.nonce])

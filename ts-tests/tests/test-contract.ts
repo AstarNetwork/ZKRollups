@@ -10,14 +10,21 @@ import Utilities, { createAndFinalizeBlock, customRequest, describeWithFrontier 
 const GENESIS_ACCOUNT = "0x6be02d1d3665660d22ff9624b7be0551ee1ac91b";
 const GENESIS_ACCOUNT_PRIVATE_KEY = "0x99B3C12287537E38C90A9219D4CB074A89A16E9CDB20BF85728EBD97C343E342";
 
-const utilities = new Utilities(GENESIS_ACCOUNT)
-const zkSyncContractAddress = utilities.getContractAddress();
-const verifierContractAddress = utilities.getContractAddress();
-const governanceContractAddress = utilities.getContractAddress();
-const proxiesContractAddress = utilities.getContractAddress();
+const deployer = new Utilities(GENESIS_ACCOUNT)
+const zkSyncContractAddress = deployer.getContractAddress();
+const verifierContractAddress = deployer.getContractAddress();
+const governanceContractAddress = deployer.getContractAddress();
+const proxiesContractAddress = deployer.getContractAddress();
+
+const contract = new Utilities(proxiesContractAddress)
+const governanceProxyContractAddress = contract.incrementNonce().getContractAddress();
+const verifierProxyContractAddress = contract.getContractAddress();
+const zkSynxContractAddress = contract.getContractAddress();
+const upgradeGateKeeperContractAddress = contract.getContractAddress();
 
 describeWithFrontier("Frontier RPC (Contract)", (context) => {
 	it("contract creation should return contract bytecode", async function () {
+		this.timeout(15000);
 		const proxiesContractorArgs = context.web3.eth.abi.encodeParameters(
 			['address', 'address', 'address', 'bytes32', 'address', 'address', 'address'],
 			[
@@ -29,19 +36,22 @@ describeWithFrontier("Frontier RPC (Contract)", (context) => {
 				operatorAddress,
 				operatorAddress
 			]).slice(2)
-		this.timeout(15000);
 		await deployContract(context.web3, ZkSync.bytecode)
 		await deployContract(context.web3, Verifier.bytecode)
 		await deployContract(context.web3, Governance.bytecode)
 		await deployContract(context.web3, DeployFactory.bytecode + proxiesContractorArgs)
-		const zkSyncCode = await customRequest(context.web3, "eth_getCode", [zkSyncContractAddress])
-		const verifierCode = await customRequest(context.web3, "eth_getCode", [verifierContractAddress])
-		const governanceCode = await customRequest(context.web3, "eth_getCode", [governanceContractAddress])
-		const deployFactoryCode = await customRequest(context.web3, "eth_getCode", [zkSyncContractAddress])
-		expect(zkSyncCode.result).not.to.equal('0x')
-		expect(verifierCode.result).not.to.equal('0x')
-		expect(governanceCode.result).not.to.equal('0x')
-		expect(deployFactoryCode.result).not.to.equal('0x')
+		expect((await customRequest(context.web3, "eth_getCode", [zkSyncContractAddress])).result).not.to.equal('0x')
+		expect((await customRequest(context.web3, "eth_getCode", [verifierContractAddress])).result).not.to.equal('0x')
+		expect((await customRequest(context.web3, "eth_getCode", [governanceContractAddress])).result).not.to.equal('0x')
+
+		// proxies contract destruct itself
+		expect((await customRequest(context.web3, "eth_getCode", [proxiesContractAddress])).result).to.equal('0x')
+
+		// contracts created as proxy
+		expect((await customRequest(context.web3, "eth_getCode", [governanceProxyContractAddress])).result).not.to.equal('0x')
+		expect((await customRequest(context.web3, "eth_getCode", [verifierProxyContractAddress])).result).not.to.equal('0x')
+		expect((await customRequest(context.web3, "eth_getCode", [zkSynxContractAddress])).result).not.to.equal('0x')
+		expect((await customRequest(context.web3, "eth_getCode", [upgradeGateKeeperContractAddress])).result).not.to.equal('0x')
 	});
 });
 
@@ -59,4 +69,4 @@ const deployContract = async(web3: Web3, bytecode: string) => {
 
 	await customRequest(web3, "eth_sendRawTransaction", [tx.rawTransaction]);
 	await createAndFinalizeBlock(web3);
-}
+};
