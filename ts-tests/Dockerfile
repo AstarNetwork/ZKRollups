@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY package.json .
 COPY yarn.lock .
+COPY .env.example .env
 
 RUN apk add git &&\
     yarn install --frozen-lockfile
