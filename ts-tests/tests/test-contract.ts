@@ -3,7 +3,8 @@ import Web3 from "web3";
 import ZkSync from '../build/ZkSync.json'
 import Verifier from '../build/Verifier.json'
 import Governance from '../build/Governance.json'
-import Proxy from '../build/Proxy.json'
+import DeployFactory from '../build/DeployFactory.json'
+import { operatorAddress, genesisRoot } from './util'
 import Utilities, { createAndFinalizeBlock, customRequest, describeWithFrontier } from "./util";
 
 const GENESIS_ACCOUNT = "0x6be02d1d3665660d22ff9624b7be0551ee1ac91b";
@@ -15,21 +16,32 @@ const verifierContractAddress = utilities.getContractAddress();
 const governanceContractAddress = utilities.getContractAddress();
 const proxiesContractAddress = utilities.getContractAddress();
 
-
 describeWithFrontier("Frontier RPC (Contract)", (context) => {
 	it("contract creation should return contract bytecode", async function () {
+		const proxiesContractorArgs = context.web3.eth.abi.encodeParameters(
+			['address', 'address', 'address', 'bytes32', 'address', 'address', 'address'],
+			[
+				governanceContractAddress,
+				verifierContractAddress,
+				zkSyncContractAddress,
+				genesisRoot,
+				operatorAddress,
+				operatorAddress,
+				operatorAddress
+			]).slice(2)
 		this.timeout(15000);
 		await deployContract(context.web3, ZkSync.bytecode)
 		await deployContract(context.web3, Verifier.bytecode)
 		await deployContract(context.web3, Governance.bytecode)
-		await deployContract(context.web3, ZkSync.bytecode)
+		await deployContract(context.web3, DeployFactory.bytecode + proxiesContractorArgs)
 		const zkSyncCode = await customRequest(context.web3, "eth_getCode", [zkSyncContractAddress])
 		const verifierCode = await customRequest(context.web3, "eth_getCode", [verifierContractAddress])
 		const governanceCode = await customRequest(context.web3, "eth_getCode", [governanceContractAddress])
-		// const zkSyncCode = await customRequest(context.web3, "eth_getCode", [proxiesContractAddress])
+		const deployFactoryCode = await customRequest(context.web3, "eth_getCode", [zkSyncContractAddress])
 		expect(zkSyncCode.result).not.to.equal('0x')
 		expect(verifierCode.result).not.to.equal('0x')
 		expect(governanceCode.result).not.to.equal('0x')
+		expect(deployFactoryCode.result).not.to.equal('0x')
 	});
 });
 

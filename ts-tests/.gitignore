@@ -2,3 +2,4 @@ node_modules/
 frontier-test-tmp
 build
 cache
+.env
