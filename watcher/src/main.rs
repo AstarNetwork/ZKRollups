@@ -1,21 +1,30 @@
-use web3::{transports, Web3};
+use hex_literal::hex;
+use web3::{
+    contract,
+    transports, Web3,
+    types::{FilterBuilder, Address},
+};
 use tokio;
 
 #[tokio::main]
-async fn main() -> web3::Result<()> {
-    let transport = transports::Http::new("http://substrate:5000")?;
-    let web3 = Web3::new(transport);
+async fn main() -> contract::Result<()> {
+    let web3 = Web3::new(transports::Http::new("http://substrate:5000")?);
 
-    println!("Calling accounts.");
-    let mut accounts = web3.eth().accounts().await?;
-    println!("Accounts: {:?}", accounts);
-    accounts.push("00a329c0648769a73afac7f9381e08fb43dbea72".parse().unwrap());
+    println!("Creating Filter...");
+    let contract_addr: Address = "65cf84183883c3e38280e549f647b775cf7cb7db".parse().unwrap();
+    let filter = FilterBuilder::default()
+            .address(vec![contract_addr])
+            .topics(Some(vec![hex!(
+                "d0943372c08b438a88d4b39d77216901079eda9ca59d45349841c099083b6830"
+            )
+            .into()]), None, None, None)
+            .build();
 
-    println!("Calling balance.");
-    for account in accounts {
-        let balance = web3.eth().balance(account, None).await?;
-        println!("Balance of {:?}: {}", account, balance);
-    }
+    let res = web3
+        .eth()
+        .logs(filter)
+        .await;
 
+    println!("{:?}", res);
     Ok(())
 }

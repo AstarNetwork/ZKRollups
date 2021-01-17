@@ -7,4 +7,4 @@ COPY . .
 RUN rustup default nightly &&\
     cargo build
 
-ENTRYPOINT cargo run
+ENTRYPOINT sleep 5000
