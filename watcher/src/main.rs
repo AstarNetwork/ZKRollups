@@ -3,7 +3,7 @@ use tokio;
 
 #[tokio::main]
 async fn main() -> web3::Result<()> {
-    let transport = transports::Http::new("http://localhost:8545")?;
+    let transport = transports::Http::new("http://substrate:5000")?;
     let web3 = Web3::new(transport);
 
     println!("Calling accounts.");

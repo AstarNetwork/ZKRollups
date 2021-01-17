@@ -1,11 +1,9 @@
 #!/bin/sh
 
-echo "Prepare Contracts..."
-(cd zkrollup
-yarn compile)
+echo "Copy Contract File..."
+rm -rf zksync/contracts/build
 mkdir zksync/contracts/build
-cp -r zkrollup/build/contracts/ zksync/contracts/build/
-cp test/config/localhost.json zksync/etc/tokens/localhost.json
+cp -r ts-tests/build/* zksync/contracts/build/
 
 echo "Build Server And Prover..."
 DOCKER_BUILDKIT=1 docker build --ssh default -f zksync/docker/server/Dockerfile zksync -t zksync/server
