@@ -8,10 +8,10 @@ use tokio;
 
 #[tokio::main]
 async fn main() -> contract::Result<()> {
-    let web3 = Web3::new(transports::Http::new("http://substrate:5000")?);
+    let web3 = Web3::new(transports::Http::new("http://localhost:7545")?);
 
     println!("Creating Filter...");
-    let contract_addr: Address = "617a6822702a24f80f42fb1baef83a3a35463a8e".parse().unwrap();
+    let contract_addr: Address = "6798b7a0b24d01a14399ebe742fc3a9c41a597ff".parse().unwrap();
     let filter = FilterBuilder::default()
             .address(vec![contract_addr])
             .from_block(BlockNumber::from(0))
