@@ -41,6 +41,7 @@ services:
       - PROVER_SERVER_PORT=8088
       - WITNESS_GENERATORS=2
       - IDLE_PROVERS=1
+      - RUST_LOG="zksync_api=debug,zksync_core=debug,zksync_eth_sender=debug,zksync_witness_generator=debug,zksync_server=debug,zksync_prover=debug,dummy_prover=info,key_generator=info,zksync_data_restore=info,zksync_eth_client=info,zksync_storage=info,zksync_state=info,zksync_types=info,exodus_test=info,loadtest=info,kube=debug,dev_ticker=info,block_sizes_test=info,zksync_config=debug"
   postgres:
     image: zksync/postgres
     container_name: postgres
