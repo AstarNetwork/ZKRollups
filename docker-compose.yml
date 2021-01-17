@@ -21,54 +21,15 @@ services:
     container_name: operator
     tty: true
     stdin_open: true
-    environment:
-      - DATABASE_URL=postgres://postgres:password@postgres/zksync
-      - DB_POOL_SIZE=10
-      - BLOCK_CHUNK_SIZES=6,30
-      - WEB3_URL=http://substrate:5000
-      - GENESIS_TX_HASH=0x092bd79d800401c8b20fbd07f09bbc8d1dd20ccb3817a7316941b5468a8fe8d5
-      - CONTRACT_ADDR=0x617a6822702a24f80f42fb1baef83a3a35463a8e
-      - GOVERNANCE_ADDR=0x19c6d657e843a0a84609b3c941b4762091978cf9
-      - OPERATOR_FEE_ETH_ADDRESS=0x6be02d1d3665660d22ff9624b7be0551ee1ac91b
-      - CONFIRMATIONS_FOR_ETH_EVENT=0
-      - MAX_NUMBER_OF_WITHDRAWALS_PER_BLOCK=10
-      - ETH_WATCH_POLL_INTERVAL=300
-      - ETH_NETWORK=localhost
-      - MINIBLOCKS_ITERATIONS=10
-      - MINIBLOCK_ITERATION_INTERVAL=200
-      - PROMETHEUS_EXPORT_PORT=3312
-      - OPERATOR_COMMIT_ETH_ADDRESS=0x6be02d1d3665660d22ff9624b7be0551ee1ac91b
-      - CHAIN_ID=9
-      - GAS_PRICE_FACTOR=1
-      - ETH_TX_POLL_PERIOD=3
-      - ETH_EXPECTED_WAIT_TIME_BLOCK=30
-      - ETH_WAIT_CONFIRMATIONS=1
-      - ETH_MAX_TXS_IN_FLIGHT=3
-      - ETH_IS_ENABLED=true
-      - PROVER_SECRET_AUTH=sample
-      - PROVER_PREPARE_DATA_INTERVAL=500
-      - PROVER_HEARTBEAT_INTERVAL=1000
-      - PROVER_CYCLE_WAIT=500
-      - PROVER_GONE_TIMEOUT=60000
-      - PROVER_SERVER_PORT=8088
-      - WITNESS_GENERATORS=2
-      - IDLE_PROVERS=1
-      - FORCED_EXIT_MINIMUM_ACCOUNT_AGE_SECS=0
-      - REST_API_PORT=3000
-      - HTTP_RPC_API_PORT=3030
-      - WS_API_PORT=3031
-      - PRIVATE_CORE_SERVER_PORT=8090
-      - PRIVATE_CORE_SERVER_URL=http://127.0.0.1:8090
-      - API_REQUESTS_CACHES_SIZE=10000
-      - ZKSYNC_HOME=/
-      - GENESIS_ROOT=0x1ec9d8aa8ba8b2f922d4f0426d9f908953c46ec2a9fe3fedc95c9c0d0f2af343
-      - ZKSYNC_CONTRACT_FILE=/contracts/build/
+    env_file:
+      - ./env/operator.env
     volumes:
       - ./ts-tests/build:/contracts/build
     ports:
       - "3000:3000"
       - "3031:3031"
       - "3030:3030"
+      - "8088:8088"
   prover:
     image: zksync/prover
     container_name: prover
@@ -89,14 +50,11 @@ services:
       - "5432:5432"
     volumes:
       - ./test/config:/etc/tokens
-  watcher:
-    build: watcher
-    container_name: watcher
-    tty: true
-    stdin_open: true
-    volumes:
-      - /app/target
-      - ./watcher:/app
+  ticker:
+    image: "matterlabs/dev-ticker:latest"
+    container_name: ticker
+    ports:
+      - "9876:9876"
 volumes:
   contracts:
 

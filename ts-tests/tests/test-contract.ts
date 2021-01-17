@@ -19,7 +19,7 @@ const proxiesContractAddress = deployer.getContractAddress();
 const contract = new Utilities(proxiesContractAddress)
 const governanceProxyContractAddress = contract.incrementNonce().getContractAddress();
 const verifierProxyContractAddress = contract.getContractAddress();
-const zkSynxContractAddress = contract.getContractAddress();
+const zkSyncProxyContractAddress = contract.getContractAddress();
 const upgradeGateKeeperContractAddress = contract.getContractAddress();
 
 describeWithFrontier("Frontier RPC (Contract)", (context) => {
@@ -41,17 +41,24 @@ describeWithFrontier("Frontier RPC (Contract)", (context) => {
 		await deployContract(context.web3, Governance.bytecode)
 		await deployContract(context.web3, DeployFactory.bytecode + proxiesContractorArgs)
 		expect((await customRequest(context.web3, "eth_getCode", [zkSyncContractAddress])).result).not.to.equal('0x')
+		console.log(`ZkSync: ${zkSyncContractAddress}`)
 		expect((await customRequest(context.web3, "eth_getCode", [verifierContractAddress])).result).not.to.equal('0x')
+		console.log(`Verifier: ${verifierContractAddress}`)
 		expect((await customRequest(context.web3, "eth_getCode", [governanceContractAddress])).result).not.to.equal('0x')
+		console.log(`Governance: ${governanceContractAddress}`)
 
 		// proxies contract destruct itself
 		expect((await customRequest(context.web3, "eth_getCode", [proxiesContractAddress])).result).to.equal('0x')
 
 		// contracts created as proxy
 		expect((await customRequest(context.web3, "eth_getCode", [governanceProxyContractAddress])).result).not.to.equal('0x')
+		console.log(`Governance Proxy: ${governanceProxyContractAddress}`)
 		expect((await customRequest(context.web3, "eth_getCode", [verifierProxyContractAddress])).result).not.to.equal('0x')
-		expect((await customRequest(context.web3, "eth_getCode", [zkSynxContractAddress])).result).not.to.equal('0x')
+		console.log(`Verifier Proxy: ${verifierProxyContractAddress}`)
+		expect((await customRequest(context.web3, "eth_getCode", [zkSyncProxyContractAddress])).result).not.to.equal('0x')
+		console.log(`ZkSync Proxy: ${zkSyncProxyContractAddress}`)
 		expect((await customRequest(context.web3, "eth_getCode", [upgradeGateKeeperContractAddress])).result).not.to.equal('0x')
+		console.log(`Gate Keeper Proxy: ${upgradeGateKeeperContractAddress}`)
 	});
 });
 

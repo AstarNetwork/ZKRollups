@@ -7,10 +7,10 @@ import DeployFactory from '../build/DeployFactory.json'
 import { operatorAddress, genesisRoot } from './util'
 import Utilities, { createAndFinalizeBlock, customRequest } from "./util";
 
-const web3 = new Web3(`http://localhost:7545`)
+const web3 = new Web3(`http://localhost:5000`)
 
-const GENESIS_ACCOUNT = "0x17a4dC4aF1FAF9c3Db0515a170491c37eb0373Dc";
-const GENESIS_ACCOUNT_PRIVATE_KEY = "0x4dc023426c7bbd647cc9789343ac495225ff11aff3463b85dac0f503b70a119d";
+const GENESIS_ACCOUNT = "0x6be02d1d3665660d22ff9624b7be0551ee1ac91b";
+const GENESIS_ACCOUNT_PRIVATE_KEY = "0x99B3C12287537E38C90A9219D4CB074A89A16E9CDB20BF85728EBD97C343E342";
 
 const deployer = new Utilities(GENESIS_ACCOUNT)
 const zkSyncContractAddress = deployer.getContractAddress();
@@ -77,4 +77,5 @@ const deployContract = async(web3: Web3, bytecode: string) => {
 	);
 
 	await customRequest(web3, "eth_sendRawTransaction", [tx.rawTransaction]);
+	await createAndFinalizeBlock(web3);
 };

@@ -3,9 +3,9 @@ import * as rlp from 'rlp'
 import keccak from 'keccak'
 import { JsonRpcResponse } from "web3-core-helpers";
 
-export const PORT = 2000;
-export const RPC_PORT = 3000;
-export const WS_PORT = 4000;
+export const PORT = 4000;
+export const RPC_PORT = 5000;
+export const WS_PORT = 6000;
 
 export const DISPLAY_LOG = process.env.FRONTIER_LOG || false;
 export const FRONTIER_LOG = process.env.FRONTIER_LOG || "info";

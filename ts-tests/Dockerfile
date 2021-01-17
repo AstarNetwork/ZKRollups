@@ -9,4 +9,6 @@ COPY .env.example .env
 RUN apk add git &&\
     yarn install --frozen-lockfile
 
+# ENTRYPOINT sleep 5000
+
 ENTRYPOINT yarn test
