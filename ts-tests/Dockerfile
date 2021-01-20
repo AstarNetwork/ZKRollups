@@ -2,13 +2,12 @@ FROM node:14.15.4-alpine
 
 WORKDIR /app
 
-COPY package.json .
-COPY yarn.lock .
+COPY . .
 COPY .env.example .env
 
 RUN apk add git &&\
-    yarn install --frozen-lockfile
+    yarn install --frozen-lockfile &&\
+    yarn build
 
-# ENTRYPOINT sleep 5000
-
-ENTRYPOINT yarn test
+ENTRYPOINT yarn mocha -r ts-node/register 'tests/test-contract.ts' &&\
+           sleep 5000
