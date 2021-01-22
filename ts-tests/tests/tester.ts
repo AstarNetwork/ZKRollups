@@ -2,6 +2,7 @@ import * as ethers from 'ethers';
 import * as zksync from './zksync/src/index';
 import ZkSync from '../build/ZkSync.json'
 import config from './config/eth.json'
+require('dotenv').config();
 
 const franklin_abi = ZkSync.abi;
 type Network = 'localhost' | 'rinkeby' | 'ropsten' | 'operator';
@@ -42,11 +43,10 @@ export class Tester {
     async fundedWallet(amount: string) {
         const newWallet = ethers.Wallet.createRandom().connect(this.ethProvider);
         const syncWallet = await zksync.Wallet.fromEthSigner(newWallet, this.syncProvider);
-        const handle = await this.ethWallet.sendTransaction({
+        await this.ethWallet.sendTransaction({
             to: newWallet.address,
             value: ethers.utils.parseEther(amount)
         });
-        await handle.wait();
         return syncWallet;
     }
 

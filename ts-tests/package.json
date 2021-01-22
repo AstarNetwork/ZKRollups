@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "compile": "truffle compile",
     "build": "waffle waffle.json",
-    "test": "mocha -r ts-node/register 'tests/**/test-*.ts'",
-    "ganache": "mocha -r ts-node/register 'ganache/**/*.ts'"
+    "pre": "mocha -r ts-node/register 'tests/**/test-integration.ts'",
+    "test": "mocha -r ts-node/register 'tests/**/test-*.ts'"
   },
   "author": "",
   "license": "ISC",
