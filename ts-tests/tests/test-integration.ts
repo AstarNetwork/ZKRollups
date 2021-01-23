@@ -33,59 +33,61 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
         operatorBalance = await tester.operatorBalance('ETH');
     })
 
-    after('disconnect tester', async () => {
+    after('disconnect tester', async function () {
         await tester.disconnect();
     });
 
-    step('should execute an auto-approved deposit', async () => {
+    step('should execute an auto-approved deposit', async function () {
+        this.timeout(15000);
         await tester.testDeposit(alice, 'ETH', DEPOSIT_AMOUNT, true);
     });
 
-    step('should execute a normal deposit', async () => {
+    step('should execute a normal deposit', async function () {
+        this.timeout(15000);
         await tester.testDeposit(alice, 'ETH', DEPOSIT_AMOUNT);
     });
 
-    step('should change pubkey onchain', async () => {
+    step('should change pubkey onchain', async function () {
         await tester.testChangePubKey(alice, 'ETH', true);
     });
 
-    step('should execute a transfer to new account', async () => {
-        await tester.testTransfer(alice, chuck, 'ETH', TX_AMOUNT);
-    });
+    // step('should execute a transfer to new account', async function () {
+    //     await tester.testTransfer(alice, chuck, 'ETH', TX_AMOUNT);
+    // });
 
-    step('should execute a transfer to existing account', async () => {
-        await tester.testTransfer(alice, chuck, 'ETH', TX_AMOUNT);
-    });
+    // step('should execute a transfer to existing account', async function () {
+    //     await tester.testTransfer(alice, chuck, 'ETH', TX_AMOUNT);
+    // });
 
-    it('should execute a transfer to self', async () => {
-        await tester.testTransfer(alice, alice, 'ETH', TX_AMOUNT);
-    });
+    // it('should execute a transfer to self', async function () {
+    //     await tester.testTransfer(alice, alice, 'ETH', TX_AMOUNT);
+    // });
 
-    step('should change pubkey offchain', async () => {
-        await tester.testChangePubKey(chuck, 'ETH', false);
-    });
+    // step('should change pubkey offchain', async function () {
+    //     await tester.testChangePubKey(chuck, 'ETH', false);
+    // });
 
-    step('should test multi-transfers', async () => {
-        await tester.testBatch(alice, bob, 'ETH', TX_AMOUNT);
-        await tester.testIgnoredBatch(alice, bob, 'ETH', TX_AMOUNT);
-        // TODO: With subsidized costs, this test fails on CI due to low gas prices and high allowance. (ZKS-138)
-        // await tester.testFailedBatch(alice, bob, token, TX_AMOUNT);
-    });
+    // step('should test multi-transfers', async function () {
+    //     await tester.testBatch(alice, bob, 'ETH', TX_AMOUNT);
+    //     await tester.testIgnoredBatch(alice, bob, 'ETH', TX_AMOUNT);
+    //     // TODO: With subsidized costs, this test fails on CI due to low gas prices and high allowance. (ZKS-138)
+    //     // await tester.testFailedBatch(alice, bob, token, TX_AMOUNT);
+    // });
 
-    step('should execute a withdrawal', async (done) => {
-        await tester.testVerifiedWithdraw(alice, 'ETH', TX_AMOUNT).catch(done);
-    });
+    // step('should execute a withdrawal', async (done) => {
+    //     await tester.testVerifiedWithdraw(alice, 'ETH', TX_AMOUNT).catch(done);
+    // });
 
-    step('should execute a ForcedExit', async (done) => {
-        await tester.testVerifiedForcedExit(alice, bob, 'ETH').catch(done);
-    });
+    // step('should execute a ForcedExit', async (done) => {
+    //     await tester.testVerifiedForcedExit(alice, bob, 'ETH').catch(done);
+    // });
 
-    it('should check collected fees', async () => {
-        const collectedFee = (await tester.operatorBalance('ETH')).sub(operatorBalance);
-        expect(collectedFee.eq(tester.runningFee), 'Fee collection failed').to.be.true;
-    });
+    // it('should check collected fees', async function () {
+    //     const collectedFee = (await tester.operatorBalance('ETH')).sub(operatorBalance);
+    //     expect(collectedFee.eq(tester.runningFee), 'Fee collection failed').to.be.true;
+    // });
 
-    it('should fail trying to send tx with wrong signature', async () => {
-        await tester.testWrongSignature(alice, bob, 'ETH', TX_AMOUNT);
-    });
+    // it('should fail trying to send tx with wrong signature', async function () {
+    //     await tester.testWrongSignature(alice, bob, 'ETH', TX_AMOUNT);
+    // });
 })

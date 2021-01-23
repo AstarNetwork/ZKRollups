@@ -7,12 +7,13 @@ const account = "0x6be02d1d3665660d22ff9624b7be0551ee1ac91b";
 const privKey = "0x99B3C12287537E38C90A9219D4CB074A89A16E9CDB20BF85728EBD97C343E342";
 
 const deployContract = async () => {
-    const tx1 = await composeTransaction(ZkSync.bytecode)
+    const tx1 = await composeDeployTransaction(ZkSync.bytecode)
     const res = await sendTransaction("eth_sendRawTransaction", [tx1.rawTransaction]) as any
     await sendTransaction('engine_createBlock', [true, true, null])
     const res2 = await web3.eth.getTransactionReceipt(res.result)
     const data = await composeContractTx(res2.contractAddress)
-    const tx2 = await composeTransaction(data)
+    const tx2 = await composeTransaction(data, res2.contractAddress)
+    console.log(tx2.rawTransaction)
     const res3 = await sendTransaction("eth_sendRawTransaction", [tx2.rawTransaction]) as any
     await sendTransaction('engine_createBlock', [true, true, null])
     const res4 = await web3.eth.getTransactionReceipt(res3.result)
@@ -35,7 +36,22 @@ const sendTransaction = async (method: string, params: any[]) => {
     )});
 }
 
-const composeTransaction = async (data: string) => {
+
+const composeTransaction = async (data: string, toAddr: string) => {
+    return await web3.eth.accounts.signTransaction(
+        {
+            from: account,
+            to: toAddr,
+            data: data,
+            value: "0x00",
+            gasPrice: 20000000000,
+            gas: 6000000,
+        },
+        privKey
+    );
+}
+
+const composeDeployTransaction = async (data: string) => {
     return await web3.eth.accounts.signTransaction(
         {
             from: account,
