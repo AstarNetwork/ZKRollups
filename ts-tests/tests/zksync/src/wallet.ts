@@ -600,6 +600,7 @@ export class Wallet {
                 const txResult = await sendTransaction("eth_sendRawTransaction", [signedTx.rawTransaction]) as any
                 await finalize()
                 ethTransaction = await web3.eth.getTransactionReceipt(txResult.result)
+                console.log(ethTransaction)
             } catch (e) {
                 this.modifyEthersError(e);
             }
