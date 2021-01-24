@@ -2,9 +2,9 @@ import Web3 from "web3"
 import { AbiItem } from "web3-utils";
 import ZkSync from '../build/Test.json'
 
-const web3 = new Web3(`http://localhost:5000`);
-const account = "0x6be02d1d3665660d22ff9624b7be0551ee1ac91b";
-const privKey = "0x99B3C12287537E38C90A9219D4CB074A89A16E9CDB20BF85728EBD97C343E342";
+const web3 = new Web3(`http://localhost:7545`);
+const account = "0x17a4dC4aF1FAF9c3Db0515a170491c37eb0373Dc";
+const privKey = "0x4dc023426c7bbd647cc9789343ac495225ff11aff3463b85dac0f503b70a119d";
 
 const deployContract = async () => {
     const tx1 = await composeDeployTransaction(ZkSync.bytecode)

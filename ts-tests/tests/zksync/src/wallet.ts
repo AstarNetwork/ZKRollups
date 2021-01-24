@@ -28,8 +28,14 @@ import {
     signMessagePersonalAPI,
     ERC20_DEPOSIT_GAS_LIMIT,
     getEthSignatureType,
-    serializeTransfer
+    serializeTransfer,
+    syncContractAbi
 } from './utils';
+import web3, {
+    composeTransaction,
+    sendTransaction,
+    finalize
+} from './web3'
 
 const EthersErrorCode = ErrorCode;
 
@@ -580,22 +586,20 @@ export class Wallet {
     }): Promise<ETHOperation> {
         const gasPrice = await this.ethSigner.provider.getGasPrice();
 
-        const mainZkSyncContract = new Contract(
-            this.provider.contractAddress.mainContract,
-            SYNC_MAIN_CONTRACT_INTERFACE,
-            this.ethSigner
+        const mainZkSyncContract = new web3.eth.Contract(
+            syncContractAbi,
+            this.provider.contractAddress.mainContract
         );
 
         let ethTransaction;
 
         if (isTokenETH(deposit.token)) {
             try {
-                ethTransaction = await mainZkSyncContract.depositETH(deposit.depositTo, {
-                    value: BigNumber.from(deposit.amount),
-                    gasLimit: BigNumber.from('200000'),
-                    gasPrice,
-                    ...deposit.ethTxOptions
-                });
+                const rawContractTx = await mainZkSyncContract.methods.depositETH(deposit.depositTo);
+                const signedTx = await composeTransaction(rawContractTx.encodeABI(), this.provider.contractAddress.mainContract)
+                const txResult = await sendTransaction("eth_sendRawTransaction", [signedTx.rawTransaction]) as any
+                await finalize()
+                ethTransaction = await web3.eth.getTransactionReceipt(txResult.result)
             } catch (e) {
                 this.modifyEthersError(e);
             }
@@ -630,7 +634,7 @@ export class Wallet {
             const txRequest = args[args.length - 1] as ethers.providers.TransactionRequest;
             if (txRequest.gasLimit == null) {
                 try {
-                    const gasEstimate = await mainZkSyncContract.estimateGas.depositERC20(...args).then(
+                    const gasEstimate = await mainZkSyncContract.methods.estimateGas.depositERC20(...args).then(
                         (estimate) => estimate,
                         (_err) => BigNumber.from('0')
                     );
@@ -644,7 +648,7 @@ export class Wallet {
             }
 
             try {
-                ethTransaction = await mainZkSyncContract.depositERC20(...args);
+                ethTransaction = await mainZkSyncContract.methods.depositERC20(...args);
             } catch (e) {
                 this.modifyEthersError(e);
             }
@@ -723,19 +727,35 @@ export class Wallet {
     }
 }
 
+interface TxReceipt {
+    transactionHash: string,
+    transactionIndex: number,
+    blockHash: string,
+    blockNumber: number,
+    from: string,
+    to: string,
+    gasUsed: number,
+    cumulativeGasUsed: number,
+    contractAddress: string | null,
+    logs: any[],
+    status: boolean,
+    logsBloom: string
+  }
+
 class ETHOperation {
     state: 'Sent' | 'Mined' | 'Committed' | 'Verified' | 'Failed';
     error?: ZKSyncTxError;
     priorityOpId?: BigNumber;
 
-    constructor(public ethTx: ContractTransaction, public zkSyncProvider: Provider) {
+    constructor(public ethTx: TxReceipt, public zkSyncProvider: Provider) {
         this.state = 'Sent';
     }
 
     async awaitEthereumTxCommit() {
         if (this.state !== 'Sent') return;
-
-        const txReceipt = await this.ethTx.wait();
+        console.log('await ethereum function')
+        const txReceipt = this.ethTx;
+        console.log('get tx receipt')
         for (const log of txReceipt.logs) {
             try {
                 const priorityQueueLog = SYNC_MAIN_CONTRACT_INTERFACE.parseLog(log);
@@ -754,10 +774,13 @@ class ETHOperation {
 
     async awaitReceipt(): Promise<PriorityOperationReceipt> {
         this.throwErrorIfFailedState();
-
+        console.log('await receipt function')
         await this.awaitEthereumTxCommit();
+        console.log('get tx')
         if (this.state !== 'Mined') return;
         const receipt = await this.zkSyncProvider.notifyPriorityOp(this.priorityOpId.toNumber(), 'COMMIT');
+        console.log('got receipt')
+        console.log(receipt)
 
         if (!receipt.executed) {
             this.setErrorState(new ZKSyncTxError('Priority operation failed', receipt));

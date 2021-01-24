@@ -1,3 +1,4 @@
+import { AbiItem } from "web3-utils";
 import { utils, constants, ethers, BigNumber, BigNumberish } from 'ethers';
 import { PubKeyHash, TokenAddress, TokenLike, Tokens, TokenSymbol, EthSignerType, Address, Transfer } from './types';
 
@@ -6,10 +7,13 @@ const MAX_NUMBER_OF_TOKENS = 128;
 // Max number of accounts for the current version, it is determined by the zkSync circuit implementation.
 const MAX_NUMBER_OF_ACCOUNTS = Math.pow(2, 24);
 
+require('dotenv').config();
 export const IERC20_INTERFACE = new utils.Interface(require('../abi/IERC20.json').abi);
 export const SYNC_MAIN_CONTRACT_INTERFACE = new utils.Interface(require('../abi/SyncMain.json').abi);
 
 export const SYNC_GOV_CONTRACT_INTERFACE = new utils.Interface(require('../abi/SyncGov.json').abi);
+
+export const syncContractAbi = require('../abi/SyncMain.json').abi as AbiItem[]
 
 export const IEIP1271_INTERFACE = new utils.Interface(require('../abi/IEIP1271.json').abi);
 
@@ -27,6 +31,8 @@ const AMOUNT_EXPONENT_BIT_WIDTH = 5;
 const AMOUNT_MANTISSA_BIT_WIDTH = 35;
 const FEE_EXPONENT_BIT_WIDTH = 5;
 const FEE_MANTISSA_BIT_WIDTH = 11;
+export const ACCOUNT = process.env.ACCOUNT
+export const PRIVATE_KEY = process.env.PRIVATE_KEY
 
 export function floatToInteger(
     floatBytes: Uint8Array,

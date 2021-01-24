@@ -4,7 +4,7 @@ const web3 = new Web3(`http://substrate:5000`)
 
 export default web3
 
-export const sendTransaction = async (method: string, params: any[]) => {
+const sendTransaction = async (method: string, params: any[]) => {
     return new Promise((resolve, reject) => {
         (web3.currentProvider as any).send(
         {
@@ -19,6 +19,10 @@ export const sendTransaction = async (method: string, params: any[]) => {
         }
     )});
 }
+
+export const finalize = async () => await sendTransaction('engine_createBlock', [true, true, null])
+
+export { sendTransaction }
 
 export const composeTransaction = async (data: string, toAddr: string) => {
     return await web3.eth.accounts.signTransaction(

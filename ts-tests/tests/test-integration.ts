@@ -38,18 +38,18 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
     });
 
     step('should execute an auto-approved deposit', async function () {
-        this.timeout(15000);
+        this.timeout(30000);
         await tester.testDeposit(alice, 'ETH', DEPOSIT_AMOUNT, true);
     });
 
     step('should execute a normal deposit', async function () {
-        this.timeout(15000);
+        this.timeout(30000);
         await tester.testDeposit(alice, 'ETH', DEPOSIT_AMOUNT);
     });
 
-    step('should change pubkey onchain', async function () {
-        await tester.testChangePubKey(alice, 'ETH', true);
-    });
+    // step('should change pubkey onchain', async function () {
+    //     await tester.testChangePubKey(alice, 'ETH', true);
+    // });
 
     // step('should execute a transfer to new account', async function () {
     //     await tester.testTransfer(alice, chuck, 'ETH', TX_AMOUNT);
