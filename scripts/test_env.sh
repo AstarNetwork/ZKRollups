@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export DATABASE_URL=postgres://localhost:password@postgres/zksync
+export DATABASE_URL=postgres://postgres:password@localhost/zksync
 export DB_POOL_SIZE=10
 export BLOCK_CHUNK_SIZES=6,30
 export WEB3_URL=http://localhost:5000
@@ -39,9 +39,9 @@ export WS_API_PORT=3031
 export PRIVATE_CORE_SERVER_PORT=8090
 export PRIVATE_CORE_SERVER_URL=http://127.0.0.1:8090
 export API_REQUESTS_CACHES_SIZE=10000
-export ZKSYNC_HOME=/
+export ZKSYNC_HOME=/home/ubuntu/ZKRollups/zksync
 export GENESIS_ROOT=0x1ec9d8aa8ba8b2f922d4f0426d9f908953c46ec2a9fe3fedc95c9c0d0f2af343
-export ZKSYNC_CONTRACT_FILE=/contracts/build/
+export ZKSYNC_CONTRACT_FILE=/home/ubuntu/ZKRollups/zksync/contracts/build/
 export ADMIN_SERVER_SECRET_AUTH=sample
 export ADMIN_SERVER_API_URL=http://127.0.0.1:8080
 export ADMIN_SERVER_API_PORT=8080
@@ -97,3 +97,10 @@ export MAX_LIQUIDATION_FEE_PERCENT=5
 export FEE_ACCOUNT_PRIVATE_KEY=unset
 export NOT_SUBSIDIZED_TOKENS=2b591e99afe9f32eaa6214f7b7629768c40eeb39,34083bbd70d394110487feaa087da875a54624ec
 export TICKER_DISABLED_TOKENS=38A2fDc11f526Ddd5a607C1F251C065f40fBF2f7
+
+cd zksync
+
+touch etc/tokens/localhost.json
+echo "[]" > etc/tokens/localhost.json
+cargo run --bin zksync_server --release -- --genesis | tee genesis.log
+export `cat genesis.log`
