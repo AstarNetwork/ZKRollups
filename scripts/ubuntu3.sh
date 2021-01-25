@@ -1,6 +1,10 @@
 #!/bin/sh
 
-cd ZKRollups/zksync
+git clone https://github.com/PlasmNetwork/ZKRollups
+cd ZKRollups
+git submodule update --init --recursive
+cd zksync
+docker-compose build substrate postgres ticker &
 yarn
 yarn zksync prepublish
 
