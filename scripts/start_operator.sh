@@ -98,9 +98,9 @@ export FEE_ACCOUNT_PRIVATE_KEY=unset
 export NOT_SUBSIDIZED_TOKENS=2b591e99afe9f32eaa6214f7b7629768c40eeb39,34083bbd70d394110487feaa087da875a54624ec
 export TICKER_DISABLED_TOKENS=38A2fDc11f526Ddd5a607C1F251C065f40fBF2f7
 
+(
 cd zksync
-
-touch etc/tokens/localhost.json
-echo "[]" > etc/tokens/localhost.json
 cargo run --bin zksync_server --release -- --genesis | tee genesis.log
 export `cat genesis.log`
+cargo run --bin zksync_server --release
+)
