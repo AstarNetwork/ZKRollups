@@ -3,7 +3,8 @@
 git clone https://github.com/PlasmNetwork/ZKRollups
 cd ZKRollups
 git submodule update --init --recursive
-docker-compose build substrate postgres ticker &
+docker-compose build substrate &
+docker build -f docker/postgres/Dockerfile zksync/core/lib/storage/migrations -t zksync/postgres &
 
 cd zksync
 yarn
