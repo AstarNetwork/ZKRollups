@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { step } from "mocha-steps";
 import { describeWithFrontier, createAndFinalizeBlock } from './util'
+import { operatorHost } from './env';
 
 import { BigNumber, utils } from 'ethers';
 import { Wallet, types } from './zksync/index';
@@ -25,7 +26,7 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
 
     before('create tester and test wallets', async function() {
         this.timeout(200000);
-        tester = await Tester.init('operator', 'HTTP');
+        tester = await Tester.init(operatorHost, 'HTTP');
 		await createAndFinalizeBlock(context.web3);
         alice = await tester.fundedWallet('5.0');
         bob = await tester.emptyWallet();

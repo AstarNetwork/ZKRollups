@@ -1,6 +1,7 @@
 import Web3 from "web3";
+import { mainchainHost } from '../../env'
 import { ACCOUNT, PRIVATE_KEY } from './utils'
-const web3 = new Web3(`http://substrate:5000`)
+const web3 = new Web3(`http://${mainchainHost}:5000`)
 
 export default web3
 
