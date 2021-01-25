@@ -3,8 +3,9 @@
 git clone https://github.com/PlasmNetwork/ZKRollups
 cd ZKRollups
 git submodule update --init --recursive
-cd zksync
 docker-compose build substrate postgres ticker &
+
+cd zksync
 yarn
 yarn zksync prepublish
 
@@ -38,3 +39,9 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 . $HOME/.cargo/env
 cargo install diesel_cli --no-default-features --features postgres
 cargo install --version=0.2.0 sqlx-cli
+
+touch etc/tokens/localhost.json
+echo "[]" > etc/tokens/localhost.json
+
+cargo build --bin zksync_server --release
+cargo build --bin plonk_step_by_step_prover --release
