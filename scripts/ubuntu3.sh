@@ -9,6 +9,7 @@ docker build -f docker/postgres/Dockerfile zksync/core/lib/storage/migrations -t
 cd zksync
 yarn
 yarn zksync prepublish
+yarn contracts build
 
 (mkdir keys/setup
 cd keys/setup
