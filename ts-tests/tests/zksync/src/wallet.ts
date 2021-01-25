@@ -32,7 +32,7 @@ import {
     syncContractAbi
 } from './utils';
 import web3, {
-    composeTransaction,
+    composeTransactionWithValue,
     sendTransaction,
     finalize
 } from './web3'
@@ -596,7 +596,7 @@ export class Wallet {
         if (isTokenETH(deposit.token)) {
             try {
                 const rawContractTx = await mainZkSyncContract.methods.depositETH(deposit.depositTo);
-                const signedTx = await composeTransaction(rawContractTx.encodeABI(), this.provider.contractAddress.mainContract)
+                const signedTx = await composeTransactionWithValue(rawContractTx.encodeABI(), this.provider.contractAddress.mainContract, deposit.amount)
                 const txResult = await sendTransaction("eth_sendRawTransaction", [signedTx.rawTransaction]) as any
                 await finalize()
                 ethTransaction = await web3.eth.getTransactionReceipt(txResult.result)
