@@ -43,7 +43,7 @@ export class Tester {
         await this.syncProvider.disconnect();
     }
 
-    async fundedWallet(amount: string) {
+    async fundedWallet() {
         const gwei = BigNumber.from(1000000000)
         const ether = gwei.mul(100000000)
         const unit = BigNumber.from(10)

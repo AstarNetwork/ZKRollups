@@ -31,7 +31,7 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
         this.timeout(timeoutMillSec);
         tester = await Tester.init(operatorHost, 'HTTP');
 		await createAndFinalizeBlock(context.web3);
-        alice = await tester.fundedWallet('5.0');
+        alice = await tester.fundedWallet();
         bob = await tester.emptyWallet();
         chuck = await tester.emptyWallet();
         operatorBalance = await tester.operatorBalance('ETH');
@@ -82,22 +82,55 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
         await tester.testIgnoredBatch(alice, bob, 'ETH', transferAmount);
     });
 
-    // step('should execute a withdrawal', async function (done) {
-    //     this.timeout(timeoutMillSec)
-    //     await tester.testVerifiedWithdraw(alice, 'ETH', transferAmount).catch(done);
-    // });
+    it('should check collected fees', async function () {
+        this.timeout(timeoutMillSec)
+        const collectedFee = (await tester.operatorBalance('ETH')).sub(operatorBalance);
+        expect(collectedFee.eq(tester.runningFee), 'Fee collection failed').to.be.true;
+    });
 
-    // step('should execute a ForcedExit', async function (done) {
-    //     this.timeout(timeoutMillSec)
-    //     await tester.testVerifiedForcedExit(alice, bob, 'ETH').catch(done);
-    // });
+    it('should fail trying to send tx with wrong signature', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testWrongSignature(alice, bob, 'ETH', transferAmount);
+    });
 
-    // it('should check collected fees', async function () {
-    //     const collectedFee = (await tester.operatorBalance('ETH')).sub(operatorBalance);
-    //     expect(collectedFee.eq(tester.runningFee), 'Fee collection failed').to.be.true;
-    // });
+    // describe('Full Exit tests', function () {
+    //     let carl: Wallet;
 
-    // it('should fail trying to send tx with wrong signature', async function () {
-    //     await tester.testWrongSignature(alice, bob, 'ETH', TX_AMOUNT);
+    //     before('create a test wallet', async function () {
+    //         this.timeout(timeoutMillSec)
+    //         carl = await tester.fundedWallet('5.0');
+    //     });
+
+    //     step('should execute full-exit on random wallet', async function () {
+    //         this.timeout(timeoutMillSec)
+    //         await tester.testFullExit(carl, 'ETH', 145);
+    //     });
+
+    //     step('should fail full-exit with wrong eth-signer', async function () {
+    //         this.timeout(timeoutMillSec)
+    //         // make a deposit so that wallet is assigned an accountId
+    //         await tester.testDeposit(carl, 'ETH', transferAmount, true);
+
+    //         const oldSigner = carl.ethSigner;
+    //         carl.ethSigner = tester.ethWallet;
+    //         const [before, after] = await tester.testFullExit(carl, 'ETH');
+    //         expect(before.eq(0), "Balance before Full Exit must be non-zero").to.be.false;
+    //         expect(before.eq(after), "Balance after incorrect Full Exit should not change").to.be.true;
+    //         carl.ethSigner = oldSigner;
+    //     });
+
+    //     step('should execute a normal full-exit', async function () {
+    //         this.timeout(timeoutMillSec)
+    //         const [before, after] = await tester.testFullExit(carl, 'ETH');
+    //         expect(before.eq(0), "Balance before Full Exit must be non-zero").to.be.false;
+    //         expect(after.eq(0), "Balance after Full Exit must be zero").to.be.true;
+    //     });
+
+    //     step('should execute full-exit on an empty wallet', async function () {
+    //         this.timeout(timeoutMillSec)
+    //         const [before, after] = await tester.testFullExit(carl, 'ETH');
+    //         expect(before.eq(0), "Balance before Full Exit must be zero (we've already withdrawn all the funds)").to.be.true;
+    //         expect(after.eq(0), "Balance after Full Exit must be zero").to.be.true;
+    //     });
     // });
 })
