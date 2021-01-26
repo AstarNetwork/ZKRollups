@@ -11,7 +11,6 @@ import {
     PriorityOperationReceipt,
     TransactionReceipt,
     PubKeyHash,
-    TxEthSignature,
     ChangePubKey,
     EthSignerType,
     SignedTransaction,
@@ -22,12 +21,8 @@ import {
     IERC20_INTERFACE,
     isTokenETH,
     MAX_ERC20_APPROVE_AMOUNT,
-    getChangePubkeyMessage,
     SYNC_MAIN_CONTRACT_INTERFACE,
-    getSignedBytesFromMessage,
-    signMessagePersonalAPI,
     ERC20_DEPOSIT_GAS_LIMIT,
-    getEthSignatureType,
     serializeTransfer,
     syncContractAbi
 } from './utils';
@@ -37,6 +32,7 @@ import web3, {
     sendTransaction,
     finalize
 } from './web3'
+import { sign } from 'crypto';
 
 const EthersErrorCode = ErrorCode;
 
@@ -447,7 +443,6 @@ export class Wallet {
         const numNonce = await this.getNonce(nonce);
         try {
             const onchainAuthFact = await mainZkSyncContract.methods.authFacts(this.address(), numNonce).call();
-            console.log(onchainAuthFact)
             return onchainAuthFact !== '0x0000000000000000000000000000000000000000000000000000000000000000';
         } catch (e) {
             this.modifyEthersError(e);
@@ -477,8 +472,8 @@ export class Wallet {
 
         try {
             const rawContractTx = await mainZkSyncContract.methods.setAuthPubkeyHash(newPubKeyHash.replace('sync:', '0x'), numNonce);
-            const signedTx = await composeTransaction(rawContractTx.encodeABI(), this.provider.contractAddress.mainContract)
-            const txResult = await sendTransaction("eth_sendRawTransaction", [signedTx.rawTransaction]) as any
+            const signedTx = await this.signTransactionObject(this.provider.contractAddress.mainContract, rawContractTx.encodeABI())
+            const txResult = await sendTransaction("eth_sendRawTransaction", [signedTx]) as any
             await finalize()
             await web3.eth.getTransactionReceipt(txResult.result)
         } catch (e) {
@@ -696,6 +691,17 @@ export class Wallet {
         } catch (e) {
             this.modifyEthersError(e);
         }
+    }
+
+    async signTransactionObject(toAddr: string, data: string) {
+        return await this.ethSigner.signTransaction({
+            to: toAddr,
+            from: this.address(),
+            gasLimit: 850000,
+            gasPrice: 90000,
+            value: "0x",
+            data: data
+        })
     }
 
     private modifyEthersError(error: any): never {

@@ -1,7 +1,10 @@
 import * as ethers from 'ethers';
+import { BigNumber } from 'ethers';
 import * as zksync from './zksync/src/index';
 import ZkSync from '../build/ZkSync.json'
 import config from './config/eth.json'
+import { composeTransactionWithValue } from './web3'
+import web3, { finalize, sendTransaction } from './zksync/src/web3';
 require('dotenv').config();
 
 const franklin_abi = ZkSync.abi;
@@ -41,12 +44,14 @@ export class Tester {
     }
 
     async fundedWallet(amount: string) {
+        const gwei = BigNumber.from(1000000000)
+        const ether = gwei.mul(100000000)
+        const unit = BigNumber.from(10)
         const newWallet = ethers.Wallet.createRandom().connect(this.ethProvider);
         const syncWallet = await zksync.Wallet.fromEthSigner(newWallet, this.syncProvider);
-        await this.ethWallet.sendTransaction({
-            to: newWallet.address,
-            value: ethers.utils.parseEther(amount)
-        });
+        const tx = await composeTransactionWithValue('0x', newWallet.address, ether.mul(unit));
+        await sendTransaction("eth_sendRawTransaction", [tx.rawTransaction]) as any
+        await finalize();
         return syncWallet;
     }
 
