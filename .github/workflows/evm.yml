@@ -15,4 +15,4 @@ jobs:
     - name: Submodules
       run: git submodule update --init --recursive
     - name: Integration Test
-      run: sh scripts/integration
+      run: sh scripts/integration.sh
