@@ -14,5 +14,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Submodules
       run: git submodule update --init --recursive
+    - name: Generate SSH
+      run: ssh-keygen
     - name: Integration Test
       run: sh scripts/integration.sh
