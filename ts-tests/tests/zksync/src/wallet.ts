@@ -680,9 +680,9 @@ export class Wallet {
 
         const tokenAddress = this.provider.tokenSet.resolveTokenAddress(withdraw.token);
         try {
-            const ethTransaction = await mainZkSyncContract.methods.fullExit(accountId, tokenAddress);
-            const signedTx = await composeTransaction(ethTransaction.encodeABI(), ethProxy.contractAddress.mainContract)
-            const txResult = await sendTransaction("eth_sendRawTransaction", [signedTx.rawTransaction]) as any
+            const rawContractTx = await mainZkSyncContract.methods.fullExit(accountId, tokenAddress);
+            const signedTx = await this.signTransactionObject(ethProxy.contractAddress.mainContract, rawContractTx.encodeABI())
+            const txResult = await sendTransaction("eth_sendRawTransaction", [signedTx]) as any
             await finalize()
             const txReceipt = await web3.eth.getTransactionReceipt(txResult.result) as any
             return new ETHOperation(txReceipt, this.provider);
@@ -698,7 +698,8 @@ export class Wallet {
             gasLimit: 850000,
             gasPrice: 90000,
             value: "0x",
-            data: data
+            data: data,
+            nonce: await web3.eth.getTransactionCount(this.address())
         })
     }
 

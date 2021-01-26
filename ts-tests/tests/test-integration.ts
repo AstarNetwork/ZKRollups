@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import { expect, assert } from 'chai';
 import { step } from "mocha-steps";
 import { describeWithFrontier, createAndFinalizeBlock } from './util'
 import { operatorHost } from './env';
@@ -111,14 +111,17 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
             // make a deposit so that wallet is assigned an accountId
             await tester.testDeposit(carl, 'ETH', transferAmount, true);
         });
-    
+
         step('should fail full-exit with wrong eth-signer', async function () {
             this.timeout(timeoutMillSec)
             const oldSigner = carl.ethSigner;
             carl.ethSigner = tester.ethWallet;
-            const [before, after] = await tester.testFullExit(carl, 'ETH');
-            expect(before.eq(0), "Balance before Full Exit must be non-zero").to.be.false;
-            expect(before.eq(after), "Balance after incorrect Full Exit should not change").to.be.true;
+            try {
+                await tester.testFullExit(carl, 'ETH')
+                assert.fail("wrong transaction should't be sent")
+            } catch(_) {
+                assert.isOk(true)
+            }
             carl.ethSigner = oldSigner;
         });
 
