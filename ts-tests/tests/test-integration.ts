@@ -17,6 +17,8 @@ const gwei = BigNumber.from(1000000000)
 const ether = gwei.mul(100000000)
 const unit = BigNumber.from(200)
 const depositAmount = ether.mul(unit)
+const transferAmount = depositAmount.div(10)
+const timeoutMillSec = 200000
 
 describeWithFrontier("Zk Rollup Integration Test", function (context) {
     let tester: Tester;
@@ -26,7 +28,7 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
     let operatorBalance: BigNumber;
 
     before('create tester and test wallets', async function() {
-        this.timeout(200000);
+        this.timeout(timeoutMillSec);
         tester = await Tester.init(operatorHost, 'HTTP');
 		await createAndFinalizeBlock(context.web3);
         alice = await tester.fundedWallet('5.0');
@@ -40,48 +42,53 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
     });
 
     step('should execute an auto-approved deposit', async function () {
-        this.timeout(30000);
+        this.timeout(timeoutMillSec)
         await tester.testDeposit(alice, 'ETH', depositAmount, true);
     });
 
     step('should execute a normal deposit', async function () {
-        this.timeout(30000);
+        this.timeout(timeoutMillSec)
         await tester.testDeposit(alice, 'ETH', depositAmount);
     });
 
     step('should change pubkey onchain', async function () {
-        this.timeout(30000);
+        this.timeout(timeoutMillSec)
         await tester.testChangePubKey(alice, 'ETH', true);
     });
 
-    // step('should execute a transfer to new account', async function () {
-    //     await tester.testTransfer(alice, chuck, 'ETH', TX_AMOUNT);
+    step('should execute a transfer to new account', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testTransfer(alice, chuck, 'ETH', transferAmount);
+    });
+
+    step('should execute a transfer to existing account', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testTransfer(alice, chuck, 'ETH', transferAmount);
+    });
+
+    it('should execute a transfer to self', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testTransfer(alice, alice, 'ETH', transferAmount);
+    });
+
+    step('should change pubkey offchain', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testChangePubKey(chuck, 'ETH', false);
+    });
+
+    step('should test multi-transfers', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testBatch(alice, bob, 'ETH', transferAmount);
+        await tester.testIgnoredBatch(alice, bob, 'ETH', transferAmount);
+    });
+
+    // step('should execute a withdrawal', async function (done) {
+    //     this.timeout(timeoutMillSec)
+    //     await tester.testVerifiedWithdraw(alice, 'ETH', transferAmount).catch(done);
     // });
 
-    // step('should execute a transfer to existing account', async function () {
-    //     await tester.testTransfer(alice, chuck, 'ETH', TX_AMOUNT);
-    // });
-
-    // it('should execute a transfer to self', async function () {
-    //     await tester.testTransfer(alice, alice, 'ETH', TX_AMOUNT);
-    // });
-
-    // step('should change pubkey offchain', async function () {
-    //     await tester.testChangePubKey(chuck, 'ETH', false);
-    // });
-
-    // step('should test multi-transfers', async function () {
-    //     await tester.testBatch(alice, bob, 'ETH', TX_AMOUNT);
-    //     await tester.testIgnoredBatch(alice, bob, 'ETH', TX_AMOUNT);
-    //     // TODO: With subsidized costs, this test fails on CI due to low gas prices and high allowance. (ZKS-138)
-    //     // await tester.testFailedBatch(alice, bob, token, TX_AMOUNT);
-    // });
-
-    // step('should execute a withdrawal', async (done) => {
-    //     await tester.testVerifiedWithdraw(alice, 'ETH', TX_AMOUNT).catch(done);
-    // });
-
-    // step('should execute a ForcedExit', async (done) => {
+    // step('should execute a ForcedExit', async function (done) {
+    //     this.timeout(timeoutMillSec)
     //     await tester.testVerifiedForcedExit(alice, bob, 'ETH').catch(done);
     // });
 
