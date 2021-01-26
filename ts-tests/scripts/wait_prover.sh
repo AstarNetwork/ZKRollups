@@ -2,10 +2,14 @@
 
 cmd="$@"
 
-until curl substrate:5000/prover_data; do
-  >&2 echo "Postgres is unavailable - sleeping"
-  sleep 1
+Line=0
+
+while [[ 4 -ge $Line ]]
+do
+  Line=`psql "postgres://postgres:password@postgres/zksync"  -c "SELECT * from active_provers;" | wc -l`
+  >&2 echo "Prover is not working"
+  sleep 10
 done
 
->&2 echo "Postgres is up - executing command"
+>&2 echo "Prover is working"
 exec $cmd

@@ -4,10 +4,10 @@ WORKDIR /app
 
 COPY . .
 
-RUN apk add git &&\
+RUN apk add git curl postgresql &&\
     yarn install &&\
     yarn build
 
 ENTRYPOINT yarn mocha -r ts-node/register 'tests/test-contract.ts' &&\
            yarn mocha -r ts-node/register 'tests/test-balance.ts' &&\
-           sleep 5000
+           sh scripts/wait_prover.sh yarn integration
