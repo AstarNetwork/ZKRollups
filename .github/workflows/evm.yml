@@ -15,6 +15,6 @@ jobs:
     - name: Submodules
       run: git submodule update --init --recursive
     - name: Generate SSH
-      run: ssh-keygen
+      run: ssh-keygen -t rsa -b 4096 -C "sample" -f ~/.ssh/id_rsa -N ""
     - name: Integration Test
       run: sh scripts/integration.sh
