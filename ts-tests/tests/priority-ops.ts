@@ -22,14 +22,9 @@ Tester.prototype.testDeposit = async function (wallet: Wallet, token: TokenLike,
         approveDepositAmountForERC20: approve
     });
 
-    console.log('handled')
     const receipt = await depositHandle.awaitReceipt();
     expect(receipt.executed, 'Deposit was not executed').to.be.true;
-    console.log('executed')
-    console.log(receipt.executed)
     const balanceAfter = await wallet.getBalance(token);
-    console.log(Number(balanceAfter), Number(amount))
-    console.log(balanceAfter.sub(balanceBefore), amount)
     expect(
         balanceAfter.sub(balanceBefore).eq(amount),
         `Deposit balance mismatch. Expected ${amount}, actual ${balanceAfter.sub(balanceBefore)}`

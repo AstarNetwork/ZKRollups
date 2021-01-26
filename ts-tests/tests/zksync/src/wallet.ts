@@ -753,7 +753,6 @@ class ETHOperation {
 
     async awaitEthereumTxCommit() {
         if (this.state !== 'Sent') return;
-        console.log('await ethereum function')
         const txReceipt = this.ethTx;
         for (const log of txReceipt.logs) {
             try {

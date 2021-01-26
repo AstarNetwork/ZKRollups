@@ -49,9 +49,10 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
         await tester.testDeposit(alice, 'ETH', depositAmount);
     });
 
-    // step('should change pubkey onchain', async function () {
-    //     await tester.testChangePubKey(alice, 'ETH', true);
-    // });
+    step('should change pubkey onchain', async function () {
+        this.timeout(30000);
+        await tester.testChangePubKey(alice, 'ETH', true);
+    });
 
     // step('should execute a transfer to new account', async function () {
     //     await tester.testTransfer(alice, chuck, 'ETH', TX_AMOUNT);
