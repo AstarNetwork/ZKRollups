@@ -658,7 +658,6 @@ export class Wallet {
         accountId?: number;
         ethTxOptions?: ethers.providers.TransactionRequest;
     }): Promise<ETHOperation> {
-        const gasPrice = await this.ethSigner.provider.getGasPrice();
         const ethProxy = new ETHProxy(this.ethSigner.provider, this.provider.contractAddress);
 
         let accountId: number;
@@ -674,20 +673,19 @@ export class Wallet {
             accountId = accountState.id;
         }
 
-        const mainZkSyncContract = new Contract(
-            ethProxy.contractAddress.mainContract,
-            SYNC_MAIN_CONTRACT_INTERFACE,
-            this.ethSigner
+        const mainZkSyncContract = new web3.eth.Contract(
+            syncContractAbi,
+            ethProxy.contractAddress.mainContract
         );
 
         const tokenAddress = this.provider.tokenSet.resolveTokenAddress(withdraw.token);
         try {
-            const ethTransaction = await mainZkSyncContract.fullExit(accountId, tokenAddress, {
-                gasLimit: BigNumber.from('500000'),
-                gasPrice,
-                ...withdraw.ethTxOptions
-            });
-            return new ETHOperation(ethTransaction, this.provider);
+            const ethTransaction = await mainZkSyncContract.methods.fullExit(accountId, tokenAddress);
+            const signedTx = await composeTransaction(ethTransaction.encodeABI(), ethProxy.contractAddress.mainContract)
+            const txResult = await sendTransaction("eth_sendRawTransaction", [signedTx.rawTransaction]) as any
+            await finalize()
+            const txReceipt = await web3.eth.getTransactionReceipt(txResult.result) as any
+            return new ETHOperation(txReceipt, this.provider);
         } catch (e) {
             this.modifyEthersError(e);
         }

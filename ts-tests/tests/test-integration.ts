@@ -30,68 +30,68 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
     before('create tester and test wallets', async function() {
         this.timeout(timeoutMillSec);
         tester = await Tester.init(operatorHost, 'HTTP');
-		// await createAndFinalizeBlock(context.web3);
-        // alice = await tester.fundedWallet();
-        // bob = await tester.emptyWallet();
-        // chuck = await tester.emptyWallet();
-        // operatorBalance = await tester.operatorBalance('ETH');
+		await createAndFinalizeBlock(context.web3);
+        alice = await tester.fundedWallet();
+        bob = await tester.emptyWallet();
+        chuck = await tester.emptyWallet();
+        operatorBalance = await tester.operatorBalance('ETH');
     })
 
-    // after('disconnect tester', async function () {
-    //     await tester.disconnect();
-    // });
+    after('disconnect tester', async function () {
+        await tester.disconnect();
+    });
 
-    // step('should execute an auto-approved deposit', async function () {
-    //     this.timeout(timeoutMillSec)
-    //     await tester.testDeposit(alice, 'ETH', depositAmount, true);
-    // });
+    step('should execute an auto-approved deposit', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testDeposit(alice, 'ETH', depositAmount, true);
+    });
 
-    // step('should execute a normal deposit', async function () {
-    //     this.timeout(timeoutMillSec)
-    //     await tester.testDeposit(alice, 'ETH', depositAmount);
-    // });
+    step('should execute a normal deposit', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testDeposit(alice, 'ETH', depositAmount);
+    });
 
-    // step('should change pubkey onchain', async function () {
-    //     this.timeout(timeoutMillSec)
-    //     await tester.testChangePubKey(alice, 'ETH', true);
-    // });
+    step('should change pubkey onchain', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testChangePubKey(alice, 'ETH', true);
+    });
 
-    // step('should execute a transfer to new account', async function () {
-    //     this.timeout(timeoutMillSec)
-    //     await tester.testTransfer(alice, chuck, 'ETH', transferAmount);
-    // });
+    step('should execute a transfer to new account', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testTransfer(alice, chuck, 'ETH', transferAmount);
+    });
 
-    // step('should execute a transfer to existing account', async function () {
-    //     this.timeout(timeoutMillSec)
-    //     await tester.testTransfer(alice, chuck, 'ETH', transferAmount);
-    // });
+    step('should execute a transfer to existing account', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testTransfer(alice, chuck, 'ETH', transferAmount);
+    });
 
-    // it('should execute a transfer to self', async function () {
-    //     this.timeout(timeoutMillSec)
-    //     await tester.testTransfer(alice, alice, 'ETH', transferAmount);
-    // });
+    it('should execute a transfer to self', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testTransfer(alice, alice, 'ETH', transferAmount);
+    });
 
-    // step('should change pubkey offchain', async function () {
-    //     this.timeout(timeoutMillSec)
-    //     await tester.testChangePubKey(chuck, 'ETH', false);
-    // });
+    step('should change pubkey offchain', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testChangePubKey(chuck, 'ETH', false);
+    });
 
-    // step('should test multi-transfers', async function () {
-    //     this.timeout(timeoutMillSec)
-    //     await tester.testBatch(alice, bob, 'ETH', transferAmount);
-    //     await tester.testIgnoredBatch(alice, bob, 'ETH', transferAmount);
-    // });
+    step('should test multi-transfers', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testBatch(alice, bob, 'ETH', transferAmount);
+        await tester.testIgnoredBatch(alice, bob, 'ETH', transferAmount);
+    });
 
-    // it('should check collected fees', async function () {
-    //     this.timeout(timeoutMillSec)
-    //     const collectedFee = (await tester.operatorBalance('ETH')).sub(operatorBalance);
-    //     expect(collectedFee.eq(tester.runningFee), 'Fee collection failed').to.be.true;
-    // });
+    it('should check collected fees', async function () {
+        this.timeout(timeoutMillSec)
+        const collectedFee = (await tester.operatorBalance('ETH')).sub(operatorBalance);
+        expect(collectedFee.eq(tester.runningFee), 'Fee collection failed').to.be.true;
+    });
 
-    // it('should fail trying to send tx with wrong signature', async function () {
-    //     this.timeout(timeoutMillSec)
-    //     await tester.testWrongSignature(alice, bob, 'ETH', transferAmount);
-    // });
+    it('should fail trying to send tx with wrong signature', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testWrongSignature(alice, bob, 'ETH', transferAmount);
+    });
 
     describe('Full Exit tests', function () {
         let carl: Wallet;
@@ -106,11 +106,14 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
             await tester.testFullExit(carl, 'ETH', 145);
         });
 
-        step('should fail full-exit with wrong eth-signer', async function () {
+        step('should execute a normal deposit', async function () {
             this.timeout(timeoutMillSec)
             // make a deposit so that wallet is assigned an accountId
             await tester.testDeposit(carl, 'ETH', transferAmount, true);
-
+        });
+    
+        step('should fail full-exit with wrong eth-signer', async function () {
+            this.timeout(timeoutMillSec)
             const oldSigner = carl.ethSigner;
             carl.ethSigner = tester.ethWallet;
             const [before, after] = await tester.testFullExit(carl, 'ETH');
