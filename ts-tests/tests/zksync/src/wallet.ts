@@ -438,15 +438,16 @@ export class Wallet {
     }
 
     async isOnchainAuthSigningKeySet(nonce: Nonce = 'committed'): Promise<boolean> {
-        const mainZkSyncContract = new Contract(
-            this.provider.contractAddress.mainContract,
-            SYNC_MAIN_CONTRACT_INTERFACE,
-            this.ethSigner
+        const mainZkSyncContract = new web3.eth.Contract(
+            syncContractAbi,
+            this.provider.contractAddress.mainContract
         );
+
 
         const numNonce = await this.getNonce(nonce);
         try {
-            const onchainAuthFact = await mainZkSyncContract.authFacts(this.address(), numNonce);
+            const onchainAuthFact = await mainZkSyncContract.methods.authFacts(this.address(), numNonce).call();
+            console.log(onchainAuthFact)
             return onchainAuthFact !== '0x0000000000000000000000000000000000000000000000000000000000000000';
         } catch (e) {
             this.modifyEthersError(e);
@@ -454,8 +455,7 @@ export class Wallet {
     }
 
     async onchainAuthSigningKey(
-        nonce: Nonce = 'committed',
-        ethTxOptions?: ethers.providers.TransactionRequest
+        nonce: Nonce = 'committed'
     ) {
         if (!this.signer) {
             throw new Error('ZKSync signer is required for current pubkey calculation.');
@@ -476,12 +476,11 @@ export class Wallet {
         );
 
         try {
-            console.log(numNonce)
             const rawContractTx = await mainZkSyncContract.methods.setAuthPubkeyHash(newPubKeyHash.replace('sync:', '0x'), numNonce);
             const signedTx = await composeTransaction(rawContractTx.encodeABI(), this.provider.contractAddress.mainContract)
             const txResult = await sendTransaction("eth_sendRawTransaction", [signedTx.rawTransaction]) as any
             await finalize()
-            return await web3.eth.getTransactionReceipt(txResult.result)
+            await web3.eth.getTransactionReceipt(txResult.result)
         } catch (e) {
             this.modifyEthersError(e);
         }
