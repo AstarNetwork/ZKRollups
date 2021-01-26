@@ -17,8 +17,7 @@ Tester.prototype.testChangePubKey = async function (wallet: Wallet, feeToken: To
     let { totalFee: fee } = await this.syncProvider.getTransactionFee(feeType, wallet.address(), feeToken);
 
     if (onchain) {
-        const handle = await wallet.onchainAuthSigningKey();
-        await handle.wait();
+        await wallet.onchainAuthSigningKey();
         expect(await wallet.isOnchainAuthSigningKeySet(), 'ChangePubKey is unset onchain').to.be.true;
     }
 

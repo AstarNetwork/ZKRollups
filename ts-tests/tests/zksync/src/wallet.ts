@@ -32,6 +32,7 @@ import {
     syncContractAbi
 } from './utils';
 import web3, {
+    composeTransaction,
     composeTransactionWithValue,
     sendTransaction,
     finalize
@@ -455,7 +456,7 @@ export class Wallet {
     async onchainAuthSigningKey(
         nonce: Nonce = 'committed',
         ethTxOptions?: ethers.providers.TransactionRequest
-    ): Promise<ContractTransaction> {
+    ) {
         if (!this.signer) {
             throw new Error('ZKSync signer is required for current pubkey calculation.');
         }
@@ -469,17 +470,18 @@ export class Wallet {
 
         const numNonce = await this.getNonce(nonce);
 
-        const mainZkSyncContract = new Contract(
-            this.provider.contractAddress.mainContract,
-            SYNC_MAIN_CONTRACT_INTERFACE,
-            this.ethSigner
+        const mainZkSyncContract = new web3.eth.Contract(
+            syncContractAbi,
+            this.provider.contractAddress.mainContract
         );
 
         try {
-            return mainZkSyncContract.setAuthPubkeyHash(newPubKeyHash.replace('sync:', '0x'), numNonce, {
-                gasLimit: BigNumber.from('200000'),
-                ...ethTxOptions
-            });
+            console.log(numNonce)
+            const rawContractTx = await mainZkSyncContract.methods.setAuthPubkeyHash(newPubKeyHash.replace('sync:', '0x'), numNonce);
+            const signedTx = await composeTransaction(rawContractTx.encodeABI(), this.provider.contractAddress.mainContract)
+            const txResult = await sendTransaction("eth_sendRawTransaction", [signedTx.rawTransaction]) as any
+            await finalize()
+            return await web3.eth.getTransactionReceipt(txResult.result)
         } catch (e) {
             this.modifyEthersError(e);
         }
