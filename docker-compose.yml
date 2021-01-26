@@ -14,15 +14,19 @@ services:
     container_name: test
     tty: true
     stdin_open: true
+    env_file:
+      - ./env/integration.env
     volumes:
       - ./ts-tests:/app
+      - /app/node_modules
+      - /app/build
   operator:
     image: zksync/server
     container_name: operator
     tty: true
     stdin_open: true
     env_file:
-      - ./env/operator.env
+      - ./env/common.env
     volumes:
       - ./ts-tests/build:/contracts/build
     ports:
@@ -35,15 +39,10 @@ services:
     container_name: prover
     tty: true
     stdin_open: true
-    environment:
-      - PROVER_SECRET_AUTH=sample
-      - ETH_NETWORK=localhost
-      - PROVER_SERVER_PORT=8088
-      - WITNESS_GENERATORS=2
-      - IDLE_PROVERS=1
-      - RUST_LOG="zksync_api=debug,zksync_core=debug,zksync_eth_sender=debug,zksync_witness_generator=debug,zksync_server=debug,zksync_prover=debug,dummy_prover=info,key_generator=info,zksync_data_restore=info,zksync_eth_client=info,zksync_storage=info,zksync_state=info,zksync_types=info,exodus_test=info,loadtest=info,kube=debug,dev_ticker=info,block_sizes_test=info,zksync_config=debug"
+    env_file:
+      - ./env/common.env
   postgres:
-    image: zksync/postgres
+    build: ./zksync/core/lib/storage/migrations
     container_name: postgres
     tty: true
     stdin_open: true

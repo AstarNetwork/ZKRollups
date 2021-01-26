@@ -40,6 +40,7 @@ describeWithFrontier("Frontier RPC (Contract)", (context) => {
 		await deployContract(context.web3, Verifier.bytecode)
 		await deployContract(context.web3, Governance.bytecode)
 		await deployContract(context.web3, DeployFactory.bytecode + proxiesContractorArgs)
+		console.log("Deploy All Contracts...")
 		expect((await customRequest(context.web3, "eth_getCode", [zkSyncContractAddress])).result).not.to.equal('0x')
 		console.log(`ZkSync: ${zkSyncContractAddress}`)
 		expect((await customRequest(context.web3, "eth_getCode", [verifierContractAddress])).result).not.to.equal('0x')
