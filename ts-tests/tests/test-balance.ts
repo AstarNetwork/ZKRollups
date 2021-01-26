@@ -2,6 +2,7 @@ import { expect } from "chai";
 import { step } from "mocha-steps";
 
 import { createAndFinalizeBlock, describeWithFrontier, customRequest } from "./util";
+import { BigNumber } from 'ethers';
 
 describeWithFrontier("Frontier RPC (Balance)", (context) => {
 	const GENESIS_ACCOUNT = "0x6be02d1d3665660d22ff9624b7be0551ee1ac91b";
@@ -14,16 +15,19 @@ describeWithFrontier("Frontier RPC (Balance)", (context) => {
 
 	step("balance to be updated after transfer", async function () {
 		this.timeout(15000);
-
+		const gwei = BigNumber.from(1000000000)
+		const ether = gwei.mul(100000000)
+		const unit = BigNumber.from(5000)
+		const value = ether.mul(unit)
 		const tx = await context.web3.eth.accounts.signTransaction({
 			from: GENESIS_ACCOUNT,
 			to: ACTOR_ACCOUNT,
-			value: 100000000000000000000,
+			value: value.toHexString(),
 			gasPrice: "0x01",
 			gas: "0x100000",
 		}, GENESIS_ACCOUNT_PRIVATE_KEY);
 		await customRequest(context.web3, "eth_sendRawTransaction", [tx.rawTransaction]);
 		await createAndFinalizeBlock(context.web3);
-		expect(await context.web3.eth.getBalance(ACTOR_ACCOUNT)).to.equal('100000000000000000000');
+		expect(await context.web3.eth.getBalance(ACTOR_ACCOUNT)).to.equal(value.toString());
 	});
 });

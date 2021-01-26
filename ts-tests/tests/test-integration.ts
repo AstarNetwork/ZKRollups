@@ -4,7 +4,7 @@ import { describeWithFrontier, createAndFinalizeBlock } from './util'
 import { operatorHost } from './env';
 
 import { BigNumber, utils } from 'ethers';
-import { Wallet, types } from './zksync/index';
+import { Wallet } from './zksync/index';
 import { Tester } from './tester';
 import './priority-ops';
 import './change-pub-key';
@@ -13,9 +13,10 @@ import './withdraw';
 import './forced-exit';
 import './misc';
 
-const TX_AMOUNT = utils.parseEther('10.0');
-// should be enough for ~200 test transactions (excluding fees), increase if needed
-const DEPOSIT_AMOUNT = TX_AMOUNT.mul(200);
+const gwei = BigNumber.from(1000000000)
+const ether = gwei.mul(100000000)
+const unit = BigNumber.from(200)
+const depositAmount = ether.mul(unit)
 
 describeWithFrontier("Zk Rollup Integration Test", function (context) {
     let tester: Tester;
@@ -40,12 +41,12 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
 
     step('should execute an auto-approved deposit', async function () {
         this.timeout(30000);
-        await tester.testDeposit(alice, 'ETH', DEPOSIT_AMOUNT, true);
+        await tester.testDeposit(alice, 'ETH', depositAmount, true);
     });
 
     step('should execute a normal deposit', async function () {
         this.timeout(30000);
-        await tester.testDeposit(alice, 'ETH', DEPOSIT_AMOUNT);
+        await tester.testDeposit(alice, 'ETH', depositAmount);
     });
 
     // step('should change pubkey onchain', async function () {

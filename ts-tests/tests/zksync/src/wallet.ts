@@ -580,7 +580,7 @@ export class Wallet {
     async depositToSyncFromEthereum(deposit: {
         depositTo: Address;
         token: TokenLike;
-        amount: BigNumberish;
+        amount: BigNumber;
         ethTxOptions?: ethers.providers.TransactionRequest;
         approveDepositAmountForERC20?: boolean;
     }): Promise<ETHOperation> {
@@ -600,7 +600,6 @@ export class Wallet {
                 const txResult = await sendTransaction("eth_sendRawTransaction", [signedTx.rawTransaction]) as any
                 await finalize()
                 ethTransaction = await web3.eth.getTransactionReceipt(txResult.result)
-                console.log(ethTransaction)
             } catch (e) {
                 this.modifyEthersError(e);
             }
@@ -756,7 +755,6 @@ class ETHOperation {
         if (this.state !== 'Sent') return;
         console.log('await ethereum function')
         const txReceipt = this.ethTx;
-        console.log('get tx receipt')
         for (const log of txReceipt.logs) {
             try {
                 const priorityQueueLog = SYNC_MAIN_CONTRACT_INTERFACE.parseLog(log);
@@ -775,13 +773,9 @@ class ETHOperation {
 
     async awaitReceipt(): Promise<PriorityOperationReceipt> {
         this.throwErrorIfFailedState();
-        console.log('await receipt function')
         await this.awaitEthereumTxCommit();
-        console.log('get tx')
         if (this.state !== 'Mined') return;
         const receipt = await this.zkSyncProvider.notifyPriorityOp(this.priorityOpId.toNumber(), 'COMMIT');
-        console.log('got receipt')
-        console.log(receipt)
 
         if (!receipt.executed) {
             this.setErrorState(new ZKSyncTxError('Priority operation failed', receipt));
