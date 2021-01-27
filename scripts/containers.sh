@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "Submodule Cloning..."
+git submodule update --init --recursive
+
 echo "Copy Contract File..."
 rm -rf zksync/contracts/build
 mkdir zksync/contracts/build

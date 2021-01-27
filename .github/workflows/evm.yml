@@ -12,8 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Submodules
-      run: git submodule update --init --recursive
     - name: Generate SSH
       run: ssh-keygen -t rsa -b 4096 -C "sample" -f ~/.ssh/id_rsa -N ""
     - name: Integration Test
