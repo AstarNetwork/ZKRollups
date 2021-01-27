@@ -13,6 +13,5 @@ RUN cd tests/zksync &&\
     yarn &&\
     yarn build
 
-ENTRYPOINT yarn mocha -r ts-node/register 'tests/test-contract.ts' &&\
-           yarn mocha -r ts-node/register 'tests/test-balance.ts' &&\
+ENTRYPOINT yarn setup &&\
            sh scripts/wait_prover.sh yarn integration
