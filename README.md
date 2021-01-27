@@ -17,16 +17,7 @@ Our milestone1 is to deploy [matter-labs](https://github.com/matter-labs/zksync)
 | 2. | Integration Test on Substrate | Test for all contracts and sidechain network actors |  
 | 3. | Documentation | Document which describes how to test ZK Rollup on substrate |
 
-## Setup
-```
-$ sh scripts/containers.sh
-$ docker-compose up
-```
 ## Test
 ```
-$ sh scripts/test.sh
-```
-## Docker
-```
-$ docker build .
+$ sh scripts/integration.sh
 ```
