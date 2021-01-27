@@ -2,10 +2,15 @@ FROM node:14.15.4-alpine
 
 WORKDIR /app
 
+RUN apk add git curl postgresql
+
 COPY . .
 
-RUN apk add git curl postgresql &&\
-    yarn install &&\
+RUN yarn install &&\
+    yarn build
+
+RUN cd tests/zksync &&\
+    yarn &&\
     yarn build
 
 ENTRYPOINT yarn mocha -r ts-node/register 'tests/test-contract.ts' &&\
