@@ -1,6 +1,6 @@
 ## Project Overview :page_facing_up:
 ![EVM](https://github.com/PlasmNetwork/ZKRollups/workflows/EVM/badge.svg)  
-We believe that ZK Rollup is the killer layer2 solution in the coming months and some of the top projects will use this technology to make DApps scalable. 
+We believe that ZK Rollup is the killer layer2 solution in the coming months and some of the top projects will use this technology to make DApps scalable.
 
 ZK Rollup is valuable for Polkadot Parachain as described below.
 1. Bringing vertical off-chain scalability without sacrificing on-chain data availability, security and privacy (×3-10 scalability).
@@ -28,6 +28,7 @@ Our milestone1 is to deploy [matter-labs](https://github.com/matter-labs/zksync)
 | git | 2.24.1 |  
 | yarn | 1.21.1 |  
 | git | 14.15.4 |
+
 And there is private key file `$HOME/.ssh/id_rsa`.
 
 - Test  
@@ -53,8 +54,7 @@ https://github.com/PlasmNetwork/ZKRollups/blob/master/ts-tests/Dockerfile#L16
 - yarn setup
 
 The `$ yarn setup` command executes `ts-tests/tests/setup-contract-test.ts` and `ts-tests/tests/setup-wallet-test.ts`.  
-The `ts-tests/tests/setup-contract-test.ts` deploys all Zk Rollup contracts to the
- substrate-based chain(substrate) and the `ts-tests/tests/setup-wallet-test.ts` funds some token to the tester wallet.
+The `ts-tests/tests/setup-contract-test.ts` deploys all Zk Rollup contracts to the substrate-based chain(substrate) and the `ts-tests/tests/setup-wallet-test.ts` funds some token to the tester wallet.
 
 - yarn integration
 
