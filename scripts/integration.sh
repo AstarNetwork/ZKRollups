@@ -8,5 +8,5 @@ yarn build
 )
 
 echo "Start Integration Test..."
-docker-compose up -f docker-compose.test.yml -d substrate operator prover postgres ticker
-docker-compose up -f docker-compose.test.yml test
+docker-compose -f docker-compose.test.yml up -d substrate operator prover postgres ticker
+docker-compose -f docker-compose.test.yml up test
