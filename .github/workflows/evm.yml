@@ -8,11 +8,20 @@ on:
 
 jobs:
   build:
-    name: 'Run tests'
+    name: 'Prepare Container Images...'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Generate SSH
       run: ssh-keygen -t rsa -b 4096 -C "sample" -f ~/.ssh/id_rsa -N ""
+    - name: Registry Auth
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u '${{ secrets.ACCOUNT_NAME }}' --password-stdin
+    - name: Build Container Images Test
+      run: sh scripts/build.sh
+  integration:
+    name: 'Run Integration Tests'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
     - name: Integration Test
       run: sh scripts/integration.sh

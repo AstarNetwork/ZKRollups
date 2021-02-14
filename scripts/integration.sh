@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
-sh scripts/containers.sh
-docker-compose build
-docker-compose up -d substrate operator prover postgres ticker
-docker-compose up test
+echo "Copy Contract File..."
+(
+cd ts-tests
+yarn
+yarn build
+)
+
+echo "Start Integration Test..."
+docker-compose up -f docker-compose.test.yml -d substrate operator prover postgres ticker
+docker-compose up -f docker-compose.test.yml test

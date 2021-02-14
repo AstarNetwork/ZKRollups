@@ -1,7 +1,7 @@
 version: '3'
 services:
   substrate:
-    build: blockchain
+    image: docker.pkg.github.com/PlasmNetwork/ZKRollups/substrate
     container_name: substrate
     tty: true
     stdin_open: true
@@ -10,20 +10,50 @@ services:
       - "5000:5000"
       - "6000:6000"
   test:
-    build: ts-tests
+    image: docker.pkg.github.com/PlasmNetwork/ZKRollups/ts-tests
     container_name: test
     tty: true
     stdin_open: true
+    env_file:
+      - ./env/integration.env
     volumes:
       - ./ts-tests:/app
-  watcher:
-    build: watcher
-    container_name: watcher
+      - /app/node_modules
+      - /app/build
+  operator:
+    image: docker.pkg.github.com/PlasmNetwork/ZKRollups/operator
+    container_name: operator
     tty: true
     stdin_open: true
+    env_file:
+      - ./env/common.env
     volumes:
-      - /app/target
-      - ./watcher:/app
+      - ./ts-tests/build:/contracts/build
+    ports:
+      - "3000:3000"
+      - "3031:3031"
+      - "3030:3030"
+      - "8088:8088"
+  prover:
+    image: docker.pkg.github.com/PlasmNetwork/ZKRollups/prover
+    container_name: prover
+    tty: true
+    stdin_open: true
+    env_file:
+      - ./env/common.env
+  postgres:
+    image: docker.pkg.github.com/PlasmNetwork/ZKRollups/postgres
+    container_name: postgres
+    tty: true
+    stdin_open: true
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./test/config:/etc/tokens
+  ticker:
+    image: "matterlabs/dev-ticker:latest"
+    container_name: ticker
+    ports:
+      - "9876:9876"
 volumes:
   contracts:
-

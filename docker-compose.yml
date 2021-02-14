@@ -57,4 +57,3 @@ services:
       - "9876:9876"
 volumes:
   contracts:
-
