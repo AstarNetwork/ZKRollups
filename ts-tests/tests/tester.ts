@@ -5,7 +5,6 @@ import ZkSync from '../build/ZkSync.json'
 import config from './config/eth.json'
 import { composeTransactionWithValue } from './web3'
 import web3, { finalize, sendTransaction } from './zksync/src/web3';
-require('dotenv').config();
 
 const franklin_abi = ZkSync.abi;
 type Network = 'localhost' | 'rinkeby' | 'ropsten' | 'operator';
