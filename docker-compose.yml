@@ -20,6 +20,8 @@ services:
       - ./ts-tests:/app
       - /app/node_modules
       - /app/build
+      - /app/tests/zksync/node_modules
+      - /app/tests/zksync/build
   operator:
     image: zksync/server
     container_name: operator
