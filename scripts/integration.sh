@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Copy Contract File..."
+echo "Build ZkSync Contracts..."
 (
 cd ts-tests
 yarn
@@ -20,6 +20,7 @@ if [[ $1 = "actions" ]]; then
     docker-compose -f docker-compose.test.yml up -d substrate operator prover postgres ticker
     docker-compose -f docker-compose.test.yml up test
 else
+    sh scripts/build.sh
     echo "Start Integration Test..."
     docker-compose build
     docker-compose up -d substrate operator prover postgres ticker
