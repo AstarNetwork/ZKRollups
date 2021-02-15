@@ -26,3 +26,6 @@ Cargo.lock
 # NixOS development environment
 .envrc
 shell.nix
+
+# Npm package environment
+package-lock.json

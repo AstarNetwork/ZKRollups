@@ -15,7 +15,6 @@ export const BINARY_PATH = `../target/debug/frontier-template-node`;
 export const SPAWNING_TIME = 30000;
 export const operatorAddress = "0x6be02d1d3665660d22ff9624b7be0551ee1ac91b"
 
-require('dotenv').config()
 export const genesisRoot = process.env.GENESIS_ROOT
 
 export default class Utilities {

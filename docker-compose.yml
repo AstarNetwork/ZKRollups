@@ -16,12 +16,6 @@ services:
     stdin_open: true
     env_file:
       - ./env/integration.env
-    volumes:
-      - ./ts-tests:/app
-      - /app/node_modules
-      - /app/build
-      - /app/tests/zksync/node_modules
-      - /app/tests/zksync/build
   operator:
     image: zksync/server
     container_name: operator
