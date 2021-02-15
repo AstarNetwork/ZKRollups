@@ -3,7 +3,7 @@
 echo "Submodule Cloning..."
 git submodule update --init --recursive
 
-if [[ $1 = "actions" ]]; then
+if [ $1 = "actions" ]; then
     echo "Prepare Substrate Container Image..."
     docker build blockchain -t docker.pkg.github.com/plasmnetwork/zkrollups/substrate:latest
     docker push docker.pkg.github.com/plasmnetwork/zkrollups/substrate:latest
