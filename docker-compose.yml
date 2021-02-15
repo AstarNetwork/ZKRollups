@@ -50,12 +50,8 @@ services:
     stdin_open: true
     ports:
       - "5432:5432"
-    volumes:
-      - ./test/config:/etc/tokens
   ticker:
     image: "matterlabs/dev-ticker:latest"
     container_name: ticker
     ports:
       - "9876:9876"
-volumes:
-  contracts:

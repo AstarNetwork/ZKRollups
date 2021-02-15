@@ -55,5 +55,3 @@ services:
     container_name: ticker
     ports:
       - "9876:9876"
-volumes:
-  contracts:
