@@ -3,12 +3,15 @@
 echo "Submodule Cloning..."
 git submodule update --init --recursive
 
-echo "Prepare Operator And Prover Container Images..."
+echo "Prepare Operator Container Image..."
 DOCKER_BUILDKIT=1 docker build --ssh default=$HOME/.ssh/id_rsa -f zksync/docker/operator/Dockerfile zksync -t docker.pkg.github.com/plasmnetwork/zkrollups/operator:latest
-DOCKER_BUILDKIT=1 docker build --ssh default=$HOME/.ssh/id_rsa -f zksync/docker/prover/Dockerfile zksync -t docker.pkg.github.com/plasmnetwork/zkrollups/prover:latest
 docker push docker.pkg.github.com/plasmnetwork/zkrollups/operator:latest
+docker rmi docker.pkg.github.com/plasmnetwork/zkrollups/operator
+
+echo "Prepare Prover Contaienr Image..."
+DOCKER_BUILDKIT=1 docker build --ssh default=$HOME/.ssh/id_rsa -f zksync/docker/prover/Dockerfile zksync -t docker.pkg.github.com/plasmnetwork/zkrollups/prover:latest
 docker push docker.pkg.github.com/plasmnetwork/zkrollups/prover:latest
-docker rmi docker.pkg.github.com/plasmnetwork/zkrollups/operator docker.pkg.github.com/plasmnetwork/zkrollups/prover
+docker rmi docker.pkg.github.com/plasmnetwork/zkrollups/prover
 
 echo "Prepare Substrate Container Image..."
 docker build blockchain -t docker.pkg.github.com/plasmnetwork/zkrollups/substrate:latest
