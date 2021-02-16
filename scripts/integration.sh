@@ -10,7 +10,6 @@ yarn build
 if [ $1 = "actions" ]; then
     echo "Pull Container Images..."
     docker pull docker.pkg.github.com/plasmnetwork/zkrollups/substrate:latest
-    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/ts-tests:latest
     docker pull docker.pkg.github.com/plasmnetwork/zkrollups/operator:latest
     docker pull docker.pkg.github.com/plasmnetwork/zkrollups/prover:latest
     docker pull docker.pkg.github.com/plasmnetwork/zkrollups/postgres:latest
@@ -18,6 +17,7 @@ if [ $1 = "actions" ]; then
 
     echo "Start Integration Test..."
     docker-compose -f docker-compose.test.yml up -d substrate operator prover postgres ticker
+    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/ts-tests:latest
     docker-compose -f docker-compose.test.yml up test
 else
     sh scripts/build.sh
