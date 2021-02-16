@@ -90,7 +90,6 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
     it('should check collected fees', async function () {
         this.timeout(timeoutMillSec)
         const collectedFee = (await tester.operatorBalance('ETH')).sub(operatorBalance);
-        console.log(collectedFee, tester.runningFee)
         expect(collectedFee.eq(tester.runningFee), 'Fee collection failed').to.be.true;
     });
 
