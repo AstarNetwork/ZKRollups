@@ -17,8 +17,7 @@ if [ $1 = "actions" ]; then
     docker pull matterlabs/dev-ticker:latest
 
     echo "Start Integration Test..."
-    docker-compose -f docker-compose.test.yml up -d substrate operator prover postgres ticker
-    docker-compose -f docker-compose.test.yml up test
+    docker-compose -f docker-compose.test.yml up substrate operator prover postgres ticker test
 else
     sh scripts/build.sh
     echo "Start Integration Test..."
