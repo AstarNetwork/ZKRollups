@@ -6,12 +6,12 @@ RUN apk add git curl postgresql
 
 COPY . .
 
-RUN yarn
+RUN yarn &&\
+    yarn build
 
 RUN cd tests/zksync &&\
     yarn &&\
     yarn build
 
-ENTRYPOINT yarn build &&\
-           yarn setup &&\
+ENTRYPOINT yarn setup &&\
            sh scripts/wait_prover.sh yarn integration

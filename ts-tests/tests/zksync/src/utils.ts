@@ -30,8 +30,8 @@ const AMOUNT_EXPONENT_BIT_WIDTH = 5;
 const AMOUNT_MANTISSA_BIT_WIDTH = 35;
 const FEE_EXPONENT_BIT_WIDTH = 5;
 const FEE_MANTISSA_BIT_WIDTH = 11;
-export const ACCOUNT = '0x17a4dC4aF1FAF9c3Db0515a170491c37eb0373Dc'
-export const PRIVATE_KEY = '0x4dc023426c7bbd647cc9789343ac495225ff11aff3463b85dac0f503b70a119d'
+export const ACCOUNT = process.env.OPERATOR_FEE_ETH_ADDRESS as string
+export const PRIVATE_KEY = process.env.PRIVATE_KEY as string
 
 export function floatToInteger(
     floatBytes: Uint8Array,

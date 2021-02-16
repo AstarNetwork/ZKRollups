@@ -82,16 +82,16 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
         await tester.testIgnoredBatch(alice, bob, 'ETH', transferAmount);
     });
 
+    it('should fail trying to send tx with wrong signature', async function () {
+        this.timeout(timeoutMillSec)
+        await tester.testWrongSignature(alice, bob, 'ETH', transferAmount);
+    });
+
     it('should check collected fees', async function () {
         this.timeout(timeoutMillSec)
         const collectedFee = (await tester.operatorBalance('ETH')).sub(operatorBalance);
         console.log(collectedFee, tester.runningFee)
         expect(collectedFee.eq(tester.runningFee), 'Fee collection failed').to.be.true;
-    });
-
-    it('should fail trying to send tx with wrong signature', async function () {
-        this.timeout(timeoutMillSec)
-        await tester.testWrongSignature(alice, bob, 'ETH', transferAmount);
     });
 
     describe('Full Exit tests', function () {

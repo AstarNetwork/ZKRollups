@@ -60,7 +60,7 @@ export class Tester {
     }
 
     async operatorBalance(token: zksync.types.TokenLike) {
-        const operatorAddress = '0x17a4dC4aF1FAF9c3Db0515a170491c37eb0373Dc';
+        const operatorAddress = process.env.OPERATOR_FEE_ETH_ADDRESS as string;
         const accountState = await this.syncProvider.getState(operatorAddress);
         const tokenSymbol = this.syncProvider.tokenSet.resolveTokenSymbol(token);
         const balance = accountState.committed.balances[tokenSymbol] || '0';
