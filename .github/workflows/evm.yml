@@ -1,4 +1,4 @@
-name: EVM
+name: Build Integration
 
 on:
   push:
