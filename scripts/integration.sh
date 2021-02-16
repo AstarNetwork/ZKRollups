@@ -13,11 +13,11 @@ if [ $1 = "actions" ]; then
     docker pull docker.pkg.github.com/plasmnetwork/zkrollups/operator:latest
     docker pull docker.pkg.github.com/plasmnetwork/zkrollups/prover:latest
     docker pull docker.pkg.github.com/plasmnetwork/zkrollups/postgres:latest
+    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/ts-tests:latest
     docker pull matterlabs/dev-ticker:latest
 
     echo "Start Integration Test..."
     docker-compose -f docker-compose.test.yml up -d substrate operator prover postgres ticker
-    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/ts-tests:latest
     docker-compose -f docker-compose.test.yml up test
 else
     sh scripts/build.sh
