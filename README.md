@@ -1,5 +1,5 @@
 ## Project Overview :page_facing_up:
-![EVM](https://github.com/PlasmNetwork/ZKRollups/workflows/EVM/badge.svg)  
+[![Build Integration](https://github.com/PlasmNetwork/ZKRollups/actions/workflows/evm.yml/badge.svg)](https://github.com/PlasmNetwork/ZKRollups/actions/workflows/evm.yml)[![Fast Integration](https://github.com/PlasmNetwork/ZKRollups/actions/workflows/test.yml/badge.svg)](https://github.com/PlasmNetwork/ZKRollups/actions/workflows/test.yml)  
 We believe that ZK Rollup is the killer layer2 solution in the coming months and some of the top projects will use this technology to make DApps scalable.
 
 ZK Rollup is valuable for Polkadot Parachain as described below.
