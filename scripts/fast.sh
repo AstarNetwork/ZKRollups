@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
+echo "Submodule Cloning..."
+git submodule update --init --recursive
+
 echo "Build ZkSync Contracts..."
 (
 cd ts-tests
 yarn
 yarn build
 )
-
-echo "Submodule Cloning..."
-git submodule update --init --recursive
 
 echo "Pull Container Images..."
 docker pull docker.pkg.github.com/plasmnetwork/zkrollups/substrate:latest

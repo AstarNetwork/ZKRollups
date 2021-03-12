@@ -10,8 +10,7 @@ RUN yarn &&\
     yarn build
 
 RUN cd tests/zksync/sdk/zksync.js &&\
-    yarn &&\
-    yarn build
+    yarn
 
 ENTRYPOINT yarn setup &&\
            sleep 5000

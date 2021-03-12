@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { step } from "mocha-steps";
 
-import { createAndFinalizeBlock, describeWithFrontier, customRequest } from "../tests/util";
+import { createAndFinalizeBlock, describeWithFrontier, customRequest } from "./util";
 import { BigNumber } from 'ethers';
 
 describeWithFrontier("Frontier RPC (Balance)", (context) => {
