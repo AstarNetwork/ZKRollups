@@ -24,12 +24,12 @@ export class Tester {
     }
 
     // prettier-ignore
-    static async init(network: Network, transport: 'WS' | 'HTTP') {
+    static async init(network: Network) {
         const ethProvider = new ethers.providers.JsonRpcProvider(config.web3_url)
         if (network == 'localhost') {
             ethProvider.pollingInterval = 100;
         }
-        const syncProvider = await zksync.getDefaultProvider(network, transport);
+        const syncProvider = await zksync.Provider.newHttpProvider('http://operator:3030');
         const ethWallet = ethers.Wallet.fromMnemonic(
             config.test_mnemonic as string,
             "m/44'/60'/0'/0/0"

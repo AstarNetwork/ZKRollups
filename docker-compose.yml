@@ -20,8 +20,8 @@ services:
       - ./ts-tests:/app
       - /app/node_modules
       - /app/build
-      - /app/tests/zksync/sdk/zksync.js/node_modules
-      - /app/tests/zksync/sdk/zksync.js/build
+      - /app/tests/zksync/node_modules
+      - /app/tests/zksync/build
   operator:
     image: zksync/server
     container_name: operator
@@ -36,6 +36,9 @@ services:
       - "3031:3031"
       - "3030:3030"
       - "8088:8088"
+    depends_on:
+      - postgres
+      - test
   prover:
     image: zksync/prover
     container_name: prover

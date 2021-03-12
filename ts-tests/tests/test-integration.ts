@@ -29,7 +29,7 @@ describeWithFrontier("Zk Rollup Integration Test", function (context) {
 
     before('create tester and test wallets', async function() {
         this.timeout(timeoutMillSec);
-        tester = await Tester.init(operatorHost, 'HTTP');
+        tester = await Tester.init(operatorHost);
 		await createAndFinalizeBlock(context.web3);
         alice = await tester.fundedWallet();
         bob = await tester.emptyWallet();
