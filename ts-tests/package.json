@@ -6,7 +6,7 @@
   "scripts": {
     "build": "waffle waffle.json",
     "integration": "mocha -r ts-node/register 'tests/**/test-integration.ts'",
-    "setup": "mocha -r ts-node/register 'tests/**/setup-*-test.ts'",
+    "setup": "mocha -r ts-node/register 'setup/**/setup-*.ts'",
     "test": "mocha -r ts-node/register 'tests/**/test-*.ts'"
   },
   "author": "",
