@@ -1,13 +1,13 @@
 import * as ethers from 'ethers';
 import { BigNumber } from 'ethers';
-import * as zksync from './zksync/src/index';
+import * as zksync from './zksync';
 import ZkSync from '../build/ZkSync.json'
 import config from './config/eth.json'
 import { composeTransactionWithValue } from './web3'
-import web3, { finalize, sendTransaction } from './zksync/src/web3';
+import web3, { finalize, sendTransaction } from './zksync/sdk/zksync.js/src/web3';
 
 const franklin_abi = ZkSync.abi;
-type Network = 'localhost' | 'rinkeby' | 'ropsten' | 'operator';
+type Network = 'localhost' | 'rinkeby' | 'ropsten';
 
 export class Tester {
     public contract: ethers.Contract;

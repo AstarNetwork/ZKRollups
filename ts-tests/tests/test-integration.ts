@@ -4,7 +4,7 @@ import { describeWithFrontier, createAndFinalizeBlock } from './util'
 import { operatorHost } from './env';
 
 import { BigNumber, utils } from 'ethers';
-import { Wallet } from './zksync/index';
+import { Wallet } from './zksync';
 import { Tester } from './tester';
 import './priority-ops';
 import './change-pub-key';
