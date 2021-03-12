@@ -2,9 +2,9 @@ name: Fast Integration
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, develop ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, develop ]
 
 jobs:
   integration:
@@ -15,4 +15,4 @@ jobs:
     - name: Registry Auth
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u '${{ secrets.ACCOUNT_NAME }}' --password-stdin
     - name: Integration Test
-      run: sh scripts/integration.sh actions
+      run: sh scripts/fast.sh actions

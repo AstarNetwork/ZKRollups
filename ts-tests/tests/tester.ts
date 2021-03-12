@@ -1,13 +1,13 @@
 import * as ethers from 'ethers';
 import { BigNumber } from 'ethers';
-import * as zksync from './zksync/src/index';
+import * as zksync from './zksync';
 import ZkSync from '../build/ZkSync.json'
 import config from './config/eth.json'
 import { composeTransactionWithValue } from './web3'
-import web3, { finalize, sendTransaction } from './zksync/src/web3';
+import web3, { finalize, sendTransaction } from './zksync/sdk/zksync.js/src/web3';
 
 const franklin_abi = ZkSync.abi;
-type Network = 'localhost' | 'rinkeby' | 'ropsten' | 'operator';
+type Network = 'localhost' | 'rinkeby' | 'ropsten';
 
 export class Tester {
     public contract: ethers.Contract;
@@ -24,12 +24,12 @@ export class Tester {
     }
 
     // prettier-ignore
-    static async init(network: Network, transport: 'WS' | 'HTTP') {
+    static async init(network: Network) {
         const ethProvider = new ethers.providers.JsonRpcProvider(config.web3_url)
         if (network == 'localhost') {
             ethProvider.pollingInterval = 100;
         }
-        const syncProvider = await zksync.getDefaultProvider(network, transport);
+        const syncProvider = await zksync.Provider.newHttpProvider('http://operator:3030');
         const ethWallet = ethers.Wallet.fromMnemonic(
             config.test_mnemonic as string,
             "m/44'/60'/0'/0/0"

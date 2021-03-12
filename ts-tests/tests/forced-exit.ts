@@ -1,6 +1,6 @@
 import { Tester } from './tester';
 import { expect } from 'chai';
-import { Wallet, types, sleep } from './zksync/index';
+import { Wallet, types, sleep } from './zksync';
 
 type TokenLike = types.TokenLike;
 

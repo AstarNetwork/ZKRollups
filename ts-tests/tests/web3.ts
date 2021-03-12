@@ -2,7 +2,7 @@ import Web3 from "web3";
 import { BigNumber } from 'ethers';
 import { mainchainHost } from './env';
 import { RPC_PORT, createAndFinalizeBlock } from "./util";
-import { ACCOUNT, PRIVATE_KEY } from './zksync/src/utils'
+import { ACCOUNT, PRIVATE_KEY } from './zksync'
 
 const web3 = new Web3(`http://${mainchainHost}:${RPC_PORT}`)
 

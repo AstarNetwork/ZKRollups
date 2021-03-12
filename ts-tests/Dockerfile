@@ -9,9 +9,10 @@ COPY . .
 RUN yarn &&\
     yarn build
 
-RUN cd tests/zksync &&\
+RUN cd tests/zksync/sdk/zksync.js &&\
     yarn &&\
     yarn build
 
 ENTRYPOINT yarn setup &&\
-           sh scripts/wait_prover.sh yarn integration
+           sleep 5000
+        #    sh scripts/wait_prover.sh yarn integration
