@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "waffle waffle.json",
-    "integration": "mocha -r ts-node/register 'tests/**/test-integration.ts'",
+    "integration": "mocha -r ts-node/register 'tests/zksync/core/tests/ts-tests/tests/**/main.test.ts'",
     "setup": "mocha -r ts-node/register 'setup/**/setup-*.ts'",
     "test": "mocha -r ts-node/register 'tests/**/test-*.ts'"
   },
