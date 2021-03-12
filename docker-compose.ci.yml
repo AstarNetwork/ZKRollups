@@ -1,7 +1,7 @@
 version: '3'
 services:
   substrate:
-    build: blockchain
+    image: docker.pkg.github.com/plasmnetwork/zkrollups/substrate:latest
     container_name: substrate
     tty: true
     stdin_open: true
@@ -23,7 +23,7 @@ services:
       - /app/tests/zksync/sdk/zksync.js/node_modules
       - /app/tests/zksync/sdk/zksync.js/build
   operator:
-    image: zksync/server
+    image: docker.pkg.github.com/plasmnetwork/zkrollups/operator:latest
     container_name: operator
     tty: true
     stdin_open: true
@@ -37,21 +37,21 @@ services:
       - "3030:3030"
       - "8088:8088"
   prover:
-    image: zksync/prover
+    image: docker.pkg.github.com/plasmnetwork/zkrollups/prover:latest
     container_name: prover
     tty: true
     stdin_open: true
     env_file:
       - ./env/common.env
   postgres:
-    build: ./zksync/core/lib/storage/migrations
+    image: docker.pkg.github.com/plasmnetwork/zkrollups/postgres:latest
     container_name: postgres
     tty: true
     stdin_open: true
     ports:
       - "5432:5432"
   ticker:
-    image: "matterlabs/dev-ticker:latest"
+    image: matterlabs/dev-ticker:latest
     container_name: ticker
     ports:
       - "9876:9876"
