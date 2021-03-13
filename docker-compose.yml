@@ -22,6 +22,8 @@ services:
       - /app/build
       - /app/tests/zksync/node_modules
       - /app/tests/zksync/build
+      - /app/tests/zksync/sdk/zksync.js/node_modules
+      - /app/tests/zksync/sdk/zksync.js/build
   operator:
     image: zksync/server
     container_name: operator

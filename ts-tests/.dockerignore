@@ -1,8 +1,10 @@
 build
 cache
 node_modules
-tests/zksync/*
-!tests/zksync/core
-!tests/zksync/sdk
-!tests/zksync/contracts
-!tests/zksync/package.json
+zksync/*
+!zksync/contracts
+!zksync/bin/
+!zksync/core/
+!zksync/yarn.lock
+!zksync/package.json
+!zksync/sdk
