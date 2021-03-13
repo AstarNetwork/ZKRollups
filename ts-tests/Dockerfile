@@ -15,7 +15,9 @@ RUN cd tests/zksync/sdk/zksync.js &&\
     yarn build
 
 RUN yarn &&\
-    yarn build
+    yarn build &&\
+    mkdir tests/zksync/contracts/build &&\
+    cp build/* tests/zksync/contracts/build/
 
 RUN zk
 
