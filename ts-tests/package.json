@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "waffle waffle.json",
-    "integration": "mocha -r ts-node/register 'tests/zksync/core/tests/ts-tests/tests/**/main.test.ts'",
+    "integration": "zk test i server",
     "setup:contracts": "ts-node 'tests/setup-contract.ts'",
     "setup:wallet": "mocha -r ts-node/register 'tests/**/setup-wallet.ts'",
     "test": "mocha -r ts-node/register 'tests/**/test-*.ts'"
