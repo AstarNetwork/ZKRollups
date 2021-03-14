@@ -23,5 +23,4 @@ RUN zk
 
 ENTRYPOINT yarn setup:contracts &&\
            yarn setup:wallet &&\
-           sleep 5000
-        #    sh scripts/wait_prover.sh yarn integration
+           sh scripts/wait_prover.sh yarn integration

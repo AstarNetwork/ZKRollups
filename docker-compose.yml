@@ -46,7 +46,7 @@ services:
     env_file:
       - ./env/common.env
   postgres:
-    build: ./zksync/core/lib/storage/migrations
+    build: ./ts-tests/tests/zksync/core/lib/storage/migrations
     container_name: postgres
     tty: true
     stdin_open: true
