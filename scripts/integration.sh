@@ -12,13 +12,13 @@ yarn build
 
 if [ "$1" = "actions" ]; then
     echo "Pull Container Images..."
-    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/substrate:latest
-    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/operator:latest
-    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/prover:latest
-    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/postgres:latest
-    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/test:latest
+    docker pull matterlabs/dev-ticker:latest &
+    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/prover:latest &
+    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/operator:latest &
+    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/postgres:latest &
+    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/test:latest &
     docker pull docker.pkg.github.com/plasmnetwork/zkrollups/setup:latest
-    docker pull matterlabs/dev-ticker:latest
+    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/substrate:latest
 
     echo "Start Integration Test..."
     docker-compose -f docker-compose.test.yml up -d substrate postgres ticker setup
