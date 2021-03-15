@@ -6,12 +6,12 @@ RUN apk add git
 
 COPY package.json waffle.json /app/
 
-COPY tests/zksync/contracts/contracts tests/zksync/contracts/contracts
+COPY src/zksync/contracts/contracts src/zksync/contracts/contracts
 
 RUN yarn &&\
     yarn build
 
-COPY tests tests
+COPY src src
 
 ENTRYPOINT yarn setup:contracts &&\
            yarn setup:wallet

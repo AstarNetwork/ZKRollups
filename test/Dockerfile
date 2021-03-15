@@ -1,6 +1,6 @@
 FROM node:14.15.4-alpine
 
-ENV ZKSYNC_HOME=/app/tests/zksync
+ENV ZKSYNC_HOME=/app/src/zksync
 
 ENV PATH=$ZKSYNC_HOME/bin:$PATH
 
@@ -10,16 +10,15 @@ RUN apk add git curl postgresql
 
 COPY . .
 
-RUN cd tests/zksync/sdk/zksync.js &&\
+RUN cd src/zksync/sdk/zksync.js &&\
     yarn &&\
     yarn build
 
 RUN yarn &&\
     yarn build &&\
-    mkdir tests/zksync/contracts/build &&\
-    cp build/* tests/zksync/contracts/build/
+    mkdir src/zksync/contracts/build &&\
+    cp build/* src/zksync/contracts/build/
 
 RUN zk
 
-ENTRYPOINT sleep 5000
-# ENTRYPOINT sh scripts/wait_prover.sh yarn integration
+ENTRYPOINT sh scripts/wait_prover.sh yarn integration

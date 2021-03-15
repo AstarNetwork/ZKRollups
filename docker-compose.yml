@@ -20,12 +20,12 @@ services:
       - ./test:/app
       - /app/node_modules
       - /app/build
-      - /app/tests/zksync/node_modules
-      - /app/tests/zksync/build
-      - /app/tests/zksync/sdk/zksync.js/node_modules
-      - /app/tests/zksync/sdk/zksync.js/build
-      - /app/tests/zksync/infrastructure/zk/node_modules
-      - /app/tests/zksync/infrastructure/zk/build
+      - /app/src/zksync/node_modules
+      - /app/src/zksync/build
+      - /app/src/zksync/sdk/zksync.js/node_modules
+      - /app/src/zksync/sdk/zksync.js/build
+      - /app/src/zksync/infrastructure/zk/node_modules
+      - /app/src/zksync/infrastructure/zk/build
   setup:
     build:
       context: test
