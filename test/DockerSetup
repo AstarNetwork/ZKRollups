@@ -8,7 +8,7 @@ COPY package.json waffle.json tsconfig.json /app/
 
 COPY src/zksync/contracts/contracts src/zksync/contracts/contracts
 
-RUN yarn &&\
+RUN yarn --production &&\
     yarn build
 
 COPY src src
