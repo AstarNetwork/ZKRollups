@@ -1,13 +1,14 @@
 {
-  "name": "ts-tests",
+  "name": "zkrollup-test",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "waffle waffle.json",
-    "integration": "mocha -r ts-node/register 'tests/**/test-integration.ts'",
-    "setup": "mocha -r ts-node/register 'setup/**/setup-*.ts'",
-    "test": "mocha -r ts-node/register 'tests/**/test-*.ts'"
+    "integration": "zk test i server",
+    "setup:contracts": "ts-node 'src/setup-contract.ts'",
+    "setup:wallet": "ts-node 'src/setup-wallet.ts'",
+    "test": "mocha -r ts-node/register 'src/**/test-*.ts'"
   },
   "author": "",
   "license": "ISC",

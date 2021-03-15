@@ -1,0 +1,17 @@
+FROM node:14.15.4-alpine
+
+WORKDIR /app
+
+RUN apk add git
+
+COPY package.json waffle.json /app/
+
+COPY src/zksync/contracts/contracts src/zksync/contracts/contracts
+
+RUN yarn &&\
+    yarn build
+
+COPY src src
+
+ENTRYPOINT yarn setup:contracts &&\
+           yarn setup:wallet

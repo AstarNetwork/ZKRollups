@@ -2,7 +2,6 @@ import Web3 from "web3";
 import * as rlp from 'rlp'
 import keccak from 'keccak'
 import { JsonRpcResponse } from "web3-core-helpers";
-import { mainchainHost } from './env';
 
 export const PORT = 4000;
 export const RPC_PORT = 5000;
@@ -16,6 +15,10 @@ export const SPAWNING_TIME = 30000;
 export const operatorAddress = "0x6be02d1d3665660d22ff9624b7be0551ee1ac91b"
 
 export const genesisRoot = process.env.GENESIS_ROOT
+
+const networkHost = process.env.MAINCHAIN_HOST
+
+export const web3 = new Web3(`http://${networkHost}:${RPC_PORT}`)
 
 export default class Utilities {
     address: string
@@ -74,18 +77,4 @@ export async function createAndFinalizeBlock(web3: Web3) {
 	if (!response.result) {
 		throw new Error(`Unexpected result: ${JSON.stringify(response)}`);
 	}
-}
-
-export function describeWithFrontier(title: string, cb: (context: { web3: Web3 }) => void, provider?: string) {
-	describe(title, () => {
-		let context: { web3: Web3 } = { web3: null };
-		// Making sure the Frontier node has started
-		before("Starting Frontier Test Node", async function () {
-			this.timeout(SPAWNING_TIME);
-			const web3 = new Web3(`http://${mainchainHost}:${RPC_PORT}`)
-			context.web3 = web3;
-		});
-
-		cb(context);
-	});
 }
