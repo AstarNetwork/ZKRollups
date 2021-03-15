@@ -40,24 +40,24 @@ $ sh scripts/integration.sh
 This script executes the following sequence.
 
 1. Build Zk Rollup contracts  
-https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/containers.sh#L6
+https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L3
 2. Build operator and prover containers  
-https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/containers.sh#L13
+https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/build.sh#L30
 3. Run substrate-based chain, operator, and prover, database containers  
-https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L5
+https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L28
 4. Run integration test container  
-https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L6
+https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L29
 
 The integration container executes following tests.  
-https://github.com/PlasmNetwork/ZKRollups/blob/master/ts-tests/Dockerfile#L16
+https://github.com/PlasmNetwork/ZKRollups/blob/master/test/Dockerfile#L24
 
 - yarn setup
 
-The `$ yarn setup` command executes `test/src/setup-contract-test.ts` and `test/src/setup-wallet-test.ts`.  
-The `test/src/setup-contract-test.ts` deploys all Zk Rollup contracts to the substrate-based chain(substrate) and the `test/src/setup-wallet-test.ts` funds some token to the tester wallet.
+The `$ yarn setup` command executes `test/src/setup-contract.ts` and `test/src/setup-wallet.ts`.  
+The `test/src/setup-contract.ts` deploys all Zk Rollup contracts to the substrate-based chain(substrate) and the `test/src/setup-wallet.ts` funds some token to the tester wallet.
 
 - yarn integration
 
-This `$ yarn integration` executes `test/src/test-integration.ts`.  
-The `test/src/test-integration.ts` tests depositing ETH, changing public key, transfering ETH, and collecting transaction fee, exiting ETH.
+This `$ yarn integration` executes [`zksync integration test`](https://github.com/ArtreeTechnologies/zksync/blob/master/core/tests/ts-tests/tests/main.test.ts).  
+The `zksync integration test` tests depositing ETH, changing public key, transfering ETH, and collecting transaction fee, exiting ETH.
 
