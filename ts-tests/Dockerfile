@@ -21,6 +21,4 @@ RUN yarn &&\
 
 RUN zk
 
-ENTRYPOINT yarn setup:contracts &&\
-           yarn setup:wallet &&\
-           sh scripts/wait_prover.sh yarn integration
+ENTRYPOINT sh scripts/wait_prover.sh yarn integration

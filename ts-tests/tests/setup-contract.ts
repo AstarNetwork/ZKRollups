@@ -1,4 +1,5 @@
-import Web3 from "web3";
+import { web3 } from "./util";
+import Web3 from "web3"
 import ZkSync from '../build/ZkSync.json'
 import Verifier from '../build/Verifier.json'
 import Governance from '../build/Governance.json'
@@ -19,9 +20,6 @@ const governanceProxyContractAddress = contract.incrementNonce().getContractAddr
 const verifierProxyContractAddress = contract.getContractAddress();
 const zkSyncProxyContractAddress = contract.getContractAddress();
 const upgradeGateKeeperContractAddress = contract.getContractAddress();
-const networkHost = process.env.MAINCHAIN_HOST
-const RPC_PORT = 5000;
-const web3 = new Web3(`http://${networkHost}:${RPC_PORT}`)
 
 const deployContracts = async() => {
 		const proxiesContractorArgs = web3.eth.abi.encodeParameters(

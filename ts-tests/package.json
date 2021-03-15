@@ -7,7 +7,7 @@
     "build": "waffle waffle.json",
     "integration": "zk test i server",
     "setup:contracts": "ts-node 'tests/setup-contract.ts'",
-    "setup:wallet": "mocha -r ts-node/register 'tests/**/setup-wallet.ts'",
+    "setup:wallet": "ts-node 'tests/setup-wallet.ts'",
     "test": "mocha -r ts-node/register 'tests/**/test-*.ts'"
   },
   "author": "",

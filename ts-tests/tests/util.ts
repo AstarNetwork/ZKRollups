@@ -18,6 +18,8 @@ export const genesisRoot = process.env.GENESIS_ROOT
 
 const networkHost = process.env.MAINCHAIN_HOST
 
+export const web3 = new Web3(`http://${networkHost}:${RPC_PORT}`)
+
 export default class Utilities {
     address: string
     nonce: number
@@ -75,18 +77,4 @@ export async function createAndFinalizeBlock(web3: Web3) {
 	if (!response.result) {
 		throw new Error(`Unexpected result: ${JSON.stringify(response)}`);
 	}
-}
-
-export function describeWithFrontier(title: string, cb: (context: { web3: Web3 }) => void, provider?: string) {
-	describe(title, () => {
-		let context: { web3: Web3 } = { web3: null };
-		// Making sure the Frontier node has started
-		before("Starting Frontier Test Node", async function () {
-			this.timeout(SPAWNING_TIME);
-			const web3 = new Web3(`http://${networkHost}:${RPC_PORT}`)
-			context.web3 = web3;
-		});
-
-		cb(context);
-	});
 }

@@ -24,6 +24,21 @@ services:
       - /app/tests/zksync/build
       - /app/tests/zksync/sdk/zksync.js/node_modules
       - /app/tests/zksync/sdk/zksync.js/build
+  setup:
+    build:
+      context: ts-tests
+      dockerfile: DockerSetup
+    container_name: setup
+    tty: true
+    stdin_open: true
+    env_file:
+      - ./env/integration.env
+    volumes:
+      - ./ts-tests:/app
+      - /app/node_modules
+      - /app/build
+    depends_on:
+      - substrate
   operator:
     image: zksync/server
     container_name: operator

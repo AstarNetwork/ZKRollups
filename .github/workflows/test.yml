@@ -1,18 +1,18 @@
-# name: Fast Integration
+name: Fast Integration
 
-# on:
-#   push:
-#     branches: [ master, develop ]
-#   pull_request:
-#     branches: [ master, develop ]
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
 
-# jobs:
-#   integration:
-#     name: 'Run Integration Tests'
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v2
-#     - name: Registry Auth
-#       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u '${{ secrets.ACCOUNT_NAME }}' --password-stdin
-#     - name: Integration Test
-#       run: sh scripts/fast.sh actions
+jobs:
+  integration:
+    name: 'Run Integration Tests'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Registry Auth
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u '${{ secrets.ACCOUNT_NAME }}' --password-stdin
+    - name: Integration Test
+      run: sh scripts/fast.sh actions
