@@ -17,7 +17,7 @@ jobs:
     - name: Registry Auth
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u '${{ secrets.ACCOUNT_NAME }}' --password-stdin
     - name: Build Container Images Test
-      run: sh scripts/build.sh actions
+      run: sh scripts/build.sh test
   integration:
     needs: [build]
     name: 'Run Integration Tests'

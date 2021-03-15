@@ -3,7 +3,7 @@
 echo "Submodule Cloning..."
 git submodule update --init --recursive
 
-if [ "$1" = "actions" ]; then
+if [ "$1" = "all" ]; then
     echo "Prepare Substrate Container Image..."
     docker build blockchain -t docker.pkg.github.com/plasmnetwork/zkrollups/substrate:latest
     docker push docker.pkg.github.com/plasmnetwork/zkrollups/substrate:latest
@@ -24,6 +24,12 @@ if [ "$1" = "actions" ]; then
     docker build test -t docker.pkg.github.com/plasmnetwork/zkrollups/test:latest
     docker build test -t docker.pkg.github.com/plasmnetwork/zkrollups/setup:latest -f test/DockerSetup
     docker push docker.pkg.github.com/plasmnetwork/zkrollups/postgres:latest
+    docker push docker.pkg.github.com/plasmnetwork/zkrollups/test:latest
+    docker push docker.pkg.github.com/plasmnetwork/zkrollups/setup:latest
+elif [ "$1" = "test" ]; then
+    echo "Prepare Integration And Setup Container Images..."
+    docker build test -t docker.pkg.github.com/plasmnetwork/zkrollups/test:latest
+    docker build test -t docker.pkg.github.com/plasmnetwork/zkrollups/setup:latest -f test/DockerSetup
     docker push docker.pkg.github.com/plasmnetwork/zkrollups/test:latest
     docker push docker.pkg.github.com/plasmnetwork/zkrollups/setup:latest
 else

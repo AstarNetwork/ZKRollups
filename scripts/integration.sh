@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+echo "Submodule Cloning..."
+git submodule update --init --recursive
+
 echo "Build ZkSync Contracts..."
 (
 cd test
@@ -13,7 +16,7 @@ if [ "$1" = "actions" ]; then
     docker pull docker.pkg.github.com/plasmnetwork/zkrollups/operator:latest
     docker pull docker.pkg.github.com/plasmnetwork/zkrollups/prover:latest
     docker pull docker.pkg.github.com/plasmnetwork/zkrollups/postgres:latest
-    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/ts-tests:latest
+    docker pull docker.pkg.github.com/plasmnetwork/zkrollups/test:latest
     docker pull docker.pkg.github.com/plasmnetwork/zkrollups/setup:latest
     docker pull matterlabs/dev-ticker:latest
 
