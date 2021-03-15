@@ -17,7 +17,8 @@ RUN cd src/zksync/sdk/zksync.js &&\
 RUN yarn &&\
     yarn build &&\
     mkdir src/zksync/contracts/build &&\
-    cp build/* src/zksync/contracts/build/
+    cp build/* src/zksync/contracts/build/ &&\
+    touch src/zksync/etc/env/dev.env
 
 RUN zk
 
