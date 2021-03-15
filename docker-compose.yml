@@ -26,6 +26,7 @@ services:
       - /app/src/zksync/sdk/zksync.js/build
       - /app/src/zksync/infrastructure/zk/node_modules
       - /app/src/zksync/infrastructure/zk/build
+      - /app/src/zksync/contracts/build
   setup:
     build:
       context: test
