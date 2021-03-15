@@ -19,7 +19,7 @@ Our milestone1 is to deploy [matter-labs](https://github.com/matter-labs/zksync)
 
 ### Integration Test on Substrate
 
-- Premise
+#### Premise
 
 | Software | Version |
 | ------------- | ------------- |  
@@ -31,7 +31,7 @@ Our milestone1 is to deploy [matter-labs](https://github.com/matter-labs/zksync)
 
 And there is private key file `$HOME/.ssh/id_rsa`.
 
-- Test  
+#### Test  
 
 Execute following command in this project root directory.
 ```
@@ -51,13 +51,13 @@ https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L29
 The integration container executes following tests.  
 https://github.com/PlasmNetwork/ZKRollups/blob/master/test/Dockerfile#L24
 
-- yarn setup
-
+#### yarn setup
 The `$ yarn setup` command executes `test/src/setup-contract.ts` and `test/src/setup-wallet.ts`.  
-The `test/src/setup-contract.ts` deploys all Zk Rollup contracts to the substrate-based chain(substrate) and the `test/src/setup-wallet.ts` funds some token to the tester wallet.
+- `test/src/setup-contract.ts`
+Deploy all Zk Rollup contracts to the substrate-based chain(substrate)
+- `test/src/setup-wallet.ts`
+Fund some tokens to the tester wallet.
 
-- yarn integration
-
+#### yarn integration
 This `$ yarn integration` executes [`zksync integration test`](https://github.com/ArtreeTechnologies/zksync/blob/master/core/tests/ts-tests/tests/main.test.ts).  
 The `zksync integration test` tests depositing ETH, changing public key, transfering ETH, and collecting transaction fee, exiting ETH.
-

@@ -6,6 +6,7 @@
   "scripts": {
     "build": "waffle waffle.json",
     "integration": "zk test i server",
+    "setup": "yarn setup:contracts && yarn setup:wallet",
     "setup:contracts": "ts-node 'src/setup-contract.ts'",
     "setup:wallet": "ts-node 'src/setup-wallet.ts'",
     "test": "mocha -r ts-node/register 'src/**/test-*.ts'"
