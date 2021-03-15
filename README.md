@@ -53,11 +53,11 @@ https://github.com/PlasmNetwork/ZKRollups/blob/master/ts-tests/Dockerfile#L16
 
 - yarn setup
 
-The `$ yarn setup` command executes `ts-tests/tests/setup-contract-test.ts` and `ts-tests/tests/setup-wallet-test.ts`.  
-The `ts-tests/tests/setup-contract-test.ts` deploys all Zk Rollup contracts to the substrate-based chain(substrate) and the `ts-tests/tests/setup-wallet-test.ts` funds some token to the tester wallet.
+The `$ yarn setup` command executes `test/src/setup-contract-test.ts` and `test/src/setup-wallet-test.ts`.  
+The `test/src/setup-contract-test.ts` deploys all Zk Rollup contracts to the substrate-based chain(substrate) and the `test/src/setup-wallet-test.ts` funds some token to the tester wallet.
 
 - yarn integration
 
-This `$ yarn integration` executes `ts-tests/tests/test-integration.ts`.  
-The `ts-tests/tests/test-integration.ts` tests depositing ETH, changing public key, transfering ETH, and collecting transaction fee, exiting ETH.
+This `$ yarn integration` executes `test/src/test-integration.ts`.  
+The `test/src/test-integration.ts` tests depositing ETH, changing public key, transfering ETH, and collecting transaction fee, exiting ETH.
 

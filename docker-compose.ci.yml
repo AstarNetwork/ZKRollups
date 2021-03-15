@@ -10,21 +10,25 @@ services:
       - "5000:5000"
       - "6000:6000"
   test:
-    build: ts-tests
+    build: test
     container_name: test
     tty: true
     stdin_open: true
     env_file:
       - ./env/integration.env
     volumes:
-      - ./ts-tests:/app
+      - ./test:/app
       - /app/node_modules
       - /app/build
+      - /app/tests/zksync/node_modules
+      - /app/tests/zksync/build
       - /app/tests/zksync/sdk/zksync.js/node_modules
       - /app/tests/zksync/sdk/zksync.js/build
+      - /app/tests/zksync/infrastructure/zk/node_modules
+      - /app/tests/zksync/infrastructure/zk/build
   setup:
     build:
-      context: ts-tests
+      context: test
       dockerfile: DockerSetup
     container_name: setup
     tty: true
@@ -32,7 +36,7 @@ services:
     env_file:
       - ./env/integration.env
     volumes:
-      - ./ts-tests:/app
+      - ./test:/app
       - /app/node_modules
       - /app/build
   operator:
@@ -43,7 +47,7 @@ services:
     env_file:
       - ./env/common.env
     volumes:
-      - ./ts-tests/build:/contracts/build
+      - ./test/build:/contracts/build
     ports:
       - "3000:3000"
       - "3031:3031"

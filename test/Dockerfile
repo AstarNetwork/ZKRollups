@@ -21,4 +21,5 @@ RUN yarn &&\
 
 RUN zk
 
-ENTRYPOINT sh scripts/wait_prover.sh yarn integration
+ENTRYPOINT sleep 5000
+# ENTRYPOINT sh scripts/wait_prover.sh yarn integration

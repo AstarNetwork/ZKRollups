@@ -10,18 +10,12 @@ services:
       - "5000:5000"
       - "6000:6000"
   test:
-    image: docker.pkg.github.com/plasmnetwork/zkrollups/ts-tests:latest
+    image: docker.pkg.github.com/plasmnetwork/zkrollups/test:latest
     container_name: test
     tty: true
     stdin_open: true
     env_file:
       - ./env/integration.env
-    volumes:
-      - ./ts-tests:/app
-      - /app/node_modules
-      - /app/build
-      - /app/tests/zksync/sdk/zksync.js/node_modules
-      - /app/tests/zksync/sdk/zksync.js/build
   setup:
     image: docker.pkg.github.com/plasmnetwork/zkrollups/setup:latest
     container_name: setup
@@ -29,10 +23,6 @@ services:
     stdin_open: true
     env_file:
       - ./env/integration.env
-    volumes:
-      - ./ts-tests:/app
-      - /app/node_modules
-      - /app/build
   operator:
     image: docker.pkg.github.com/plasmnetwork/zkrollups/operator:latest
     container_name: operator
@@ -41,7 +31,7 @@ services:
     env_file:
       - ./env/common.env
     volumes:
-      - ./ts-tests/build:/contracts/build
+      - ./test/build:/contracts/build
     ports:
       - "3000:3000"
       - "3031:3031"

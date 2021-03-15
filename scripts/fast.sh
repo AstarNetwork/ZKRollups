@@ -5,7 +5,7 @@ git submodule update --init --recursive
 
 echo "Build ZkSync Contracts..."
 (
-cd ts-tests
+cd test
 yarn
 yarn build
 )

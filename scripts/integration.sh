@@ -2,12 +2,12 @@
 
 echo "Build ZkSync Contracts..."
 (
-cd ts-tests
+cd test
 yarn
 yarn build
 )
 
-if [ $1 = "actions" ]; then
+if [ "$1" = "actions" ]; then
     echo "Pull Container Images..."
     docker pull docker.pkg.github.com/plasmnetwork/zkrollups/substrate:latest
     docker pull docker.pkg.github.com/plasmnetwork/zkrollups/operator:latest
