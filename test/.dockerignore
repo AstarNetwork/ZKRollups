@@ -1,11 +1,3 @@
 build
 cache
 node_modules
-src/zksync/*
-!src/zksync/contracts
-!src/zksync/bin/
-!src/zksync/core/
-!src/zksync/infrastructure/
-!src/zksync/sdk
-!src/zksync/yarn.lock
-!src/zksync/package.json
