@@ -31,7 +31,7 @@ Our milestone1 is to deploy [matter-labs](https://github.com/matter-labs/zksync)
 
 And there is private key file `$HOME/.ssh/id_rsa`.
 
-#### Test  
+#### Test
 
 Execute following command in this project root directory.
 ```
@@ -39,25 +39,34 @@ $ sh scripts/integration.sh
 ```
 This script executes the following sequence.
 
-1. Build Zk Rollup contracts  
-https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L3
-2. Build operator and prover containers  
-https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/build.sh#L30
-3. Run substrate-based chain, operator, and prover, database containers  
-https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L28
-4. Run integration test container  
-https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L29
+1. Build Zk Rollup contracts [code](https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L3)  
+2. Build operator and prover containers [code](https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/build.sh#L30)  
+3. Run substrate-based chain, operator, and prover, database containers [code](https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L28)  
+4. Run integration test container [code](https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L29)  
 
-The integration container executes following tests.  
-https://github.com/PlasmNetwork/ZKRollups/blob/master/test/Dockerfile#L24
+#### Containers
+
+| Name | Description |
+| ------------- | ------------- |  
+| substrate | substrate based chain |  
+| test | integration test |  
+| setup | setup Zksync env to deploy contract and fund coinbase account |  
+| operator | sidechain operator |  
+| prover | zk prover |  
+| postgres | sidechain db |
 
 #### yarn setup
-The `$ yarn setup` command executes `test/src/setup-contract.ts` and `test/src/setup-wallet.ts`.  
-- `test/src/setup-contract.ts`
+`$ yarn setup` executes `test/src/setup-contract.ts` and `test/src/setup-wallet.ts`.  
+- `test/src/setup-contract.ts`  
 Deploy all Zk Rollup contracts to the substrate-based chain(substrate)
-- `test/src/setup-wallet.ts`
+- `test/src/setup-wallet.ts`  
 Fund some tokens to the tester wallet.
 
 #### yarn integration
-This `$ yarn integration` executes [`zksync integration test`](https://github.com/ArtreeTechnologies/zksync/blob/master/core/tests/ts-tests/tests/main.test.ts).  
-The `zksync integration test` tests depositing ETH, changing public key, transfering ETH, and collecting transaction fee, exiting ETH.
+`$ yarn integration` executes [`zksync integration test`](https://github.com/ArtreeTechnologies/zksync/blob/master/core/tests/ts-tests/tests/main.test.ts).  
+The `zksync integration test` tests
+- Depositing ETH  
+- Changing public key  
+- Transfering ETH  
+- Collecting transaction fee  
+- Exiting ETH
