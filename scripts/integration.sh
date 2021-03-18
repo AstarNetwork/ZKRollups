@@ -28,6 +28,7 @@ else
     sh scripts/build.sh
     echo "Start Integration Test..."
     docker-compose build
-    docker-compose up -d substrate operator prover postgres ticker setup
+    docker-compose up -d substrate postgres ticker setup
+    docker-compose up -d operator prover
     docker-compose up test
 fi
