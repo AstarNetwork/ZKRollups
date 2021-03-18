@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 echo "Submodule Cloning..."
-git submodule update --init --recursive &
+git submodule update --init --recursive
 
 echo "Build ZkSync Contracts..."
 (
 cd test
 yarn
 yarn build
-) &
+)
 
 if [ "$1" = "actions" ]; then
     echo "Pull Container Images..."
