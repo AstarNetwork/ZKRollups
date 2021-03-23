@@ -1,6 +1,5 @@
 ## Project Overview :page_facing_up:
 [![Build Integration](https://github.com/PlasmNetwork/ZKRollups/actions/workflows/evm.yml/badge.svg)](https://github.com/PlasmNetwork/ZKRollups/actions/workflows/evm.yml)
-[![Fast Integration](https://github.com/PlasmNetwork/ZKRollups/actions/workflows/test.yml/badge.svg)](https://github.com/PlasmNetwork/ZKRollups/actions/workflows/test.yml)  
 
 ### Diclaimer
 As a first step, we use Matter Labs' ZK Rollups conntracts. Regarding the contracts, all credits goes to Matter Labs. What makes this implementation unique is that we will make a ZK Rollups Substrate pallet.
