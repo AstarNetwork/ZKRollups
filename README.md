@@ -2,7 +2,7 @@
 [![Build Integration](https://github.com/PlasmNetwork/ZKRollups/actions/workflows/evm.yml/badge.svg)](https://github.com/PlasmNetwork/ZKRollups/actions/workflows/evm.yml)
 
 ### Diclaimer
-As a first step, we use Matter Labs' ZK Rollups conntracts. Regarding the contracts, all credits goes to Matter Labs. What makes this implementation unique is that we will make a ZK Rollups Substrate pallet.
+As a first step, we use Matter Labs' ZK Rollups contracts. Regarding the contracts, all credits goes to Matter Labs. What makes this implementation unique is that we will make a ZK Rollups Substrate pallet.
 
 ### Introduction
 We believe that ZK Rollup is the killer layer2 solution in the coming months and some of the top projects will use this technology to make DApps scalable.
