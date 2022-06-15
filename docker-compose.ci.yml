@@ -1,7 +1,7 @@
 version: '3'
 services:
   substrate:
-    image: docker.pkg.github.com/plasmnetwork/zkrollups/substrate:latest
+    image: docker.pkg.github.com/astarnetwork/zkrollups/substrate:latest
     container_name: substrate
     tty: true
     stdin_open: true
@@ -41,7 +41,7 @@ services:
       - /app/node_modules
       - /app/build
   operator:
-    image: docker.pkg.github.com/plasmnetwork/zkrollups/operator:latest
+    image: docker.pkg.github.com/astarnetwork/zkrollups/operator:latest
     container_name: operator
     tty: true
     stdin_open: true
@@ -55,14 +55,14 @@ services:
       - "3030:3030"
       - "8088:8088"
   prover:
-    image: docker.pkg.github.com/plasmnetwork/zkrollups/prover:latest
+    image: docker.pkg.github.com/astarnetwork/zkrollups/prover:latest
     container_name: prover
     tty: true
     stdin_open: true
     env_file:
       - ./env/common.env
   postgres:
-    image: docker.pkg.github.com/plasmnetwork/zkrollups/postgres:latest
+    image: docker.pkg.github.com/astarnetwork/zkrollups/postgres:latest
     container_name: postgres
     tty: true
     stdin_open: true
