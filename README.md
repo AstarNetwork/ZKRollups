@@ -1,5 +1,5 @@
 ## Project Overview :page_facing_up:
-[![Build Integration](https://github.com/PlasmNetwork/ZKRollups/actions/workflows/evm.yml/badge.svg)](https://github.com/PlasmNetwork/ZKRollups/actions/workflows/evm.yml)
+[![Build Integration](https://github.com/AstarNetwork/ZKRollups/actions/workflows/evm.yml/badge.svg)](https://github.com/AstarNetwork/ZKRollups/actions/workflows/evm.yml)
 
 ### Diclaimer
 As a first step, we use Matter Labs' ZK Rollups contracts. Regarding the contracts, all credits goes to Matter Labs. What makes this implementation unique is that we will make a ZK Rollups Substrate pallet.
@@ -35,10 +35,10 @@ $ sh scripts/integration.sh
 ```
 This script executes the following sequence.
 
-1. Build Zk Rollup contracts [code](https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L3)  
-2. Build operator and prover containers [code](https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/build.sh#L30)  
-3. Run substrate-based chain, operator, and prover, database containers [code](https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L28)  
-4. Run integration test container [code](https://github.com/PlasmNetwork/ZKRollups/blob/master/scripts/integration.sh#L29)  
+1. Build Zk Rollup contracts [code](https://github.com/AstarNetwork/ZKRollups/blob/master/scripts/integration.sh#L3)  
+2. Build operator and prover containers [code](https://github.com/AstarNetwork/ZKRollups/blob/master/scripts/build.sh#L30)  
+3. Run substrate-based chain, operator, and prover, database containers [code](https://github.com/AstarNetwork/ZKRollups/blob/master/scripts/integration.sh#L28)  
+4. Run integration test container [code](https://github.com/AstarNetwork/ZKRollups/blob/master/scripts/integration.sh#L29)  
 
 #### Containers
 
